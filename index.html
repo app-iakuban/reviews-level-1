@@ -135,6 +135,41 @@ section{padding:clamp(72px,9vw,116px) 0}
 .pcard .pdur{display:inline-block;margin-top:8px;font-size:12px;color:var(--ink2);border:1px solid var(--line);border-radius:7px;padding:1px 10px}
 .more-row{text-align:center;margin-top:52px}
 
+/* ---------- кейсы (карусель) ---------- */
+.cases{background:linear-gradient(180deg,#FFFFFF 0%,#F2F5FC 18%,#F2F5FC 100%)}
+.crail-shell{position:relative}
+.crail{display:grid;grid-auto-flow:column;grid-auto-columns:min(400px,86vw);gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;padding:6px 6px 26px;scrollbar-width:thin;scrollbar-color:#C9C9D4 transparent;
+  -webkit-mask-image:linear-gradient(to right,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(to right,#000 calc(100% - 56px),transparent)} /* обрез последней видимой карточки читается как затухание, а не как баг */
+.crail.at-end{-webkit-mask-image:none;mask-image:none}
+.crail:focus-visible{outline:3px solid #3D3DF0;outline-offset:3px}
+.crail::-webkit-scrollbar{height:6px}
+.crail::-webkit-scrollbar-thumb{background:#C9C9D4;border-radius:3px}
+.crail::-webkit-scrollbar-track{background:transparent}
+.ccard{scroll-snap-align:start;background:#fff;border:1px solid #ECECEF;border-radius:22px;padding:30px 30px 26px;display:flex;flex-direction:column;box-shadow:0 4px 18px rgba(29,29,31,.05)}
+.ccard-top{display:flex;align-items:center;gap:14px;margin-bottom:18px}
+.ccard-top img{width:60px;height:60px;border-radius:50%;object-fit:cover;object-position:50% 25%;flex:0 0 60px}
+.ccard-top .cname{font-family:var(--text);font-size:16.5px;font-weight:600;line-height:1.3;letter-spacing:0}
+.ccard-top .crole{font-size:13.5px;color:var(--ink2);margin-top:2px;line-height:1.4}
+.cab{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.cab .row{display:flex;gap:10px;font-size:14.5px;line-height:1.5}
+.cab .was{color:var(--ink2)}
+.cab .was::before{content:'';flex:0 0 9px;height:9px;margin-top:7px;border-radius:50%;background:#C9C9D4}
+.cab .now{color:#212121;font-weight:500}
+.cab .now::before{content:'';flex:0 0 9px;height:9px;margin-top:7px;border-radius:50%;background:var(--grad)}
+.ccard q{display:block;font-size:14.5px;line-height:1.55;color:#4A4A4F;quotes:'«' '»';margin-top:auto;border-left:3px solid var(--accent);padding-left:14px;font-style:normal}
+.cvideo{display:inline-flex;align-items:center;gap:8px;margin-top:18px;border:0;background:none;padding:0;font-family:var(--text);font-size:14px;font-weight:500;color:var(--accent);cursor:pointer;text-align:left}
+.cvideo:hover{text-decoration:underline}
+.cvideo .ic{position:relative;width:22px;height:22px;flex:0 0 22px;border-radius:50%;background:var(--grad)}
+.cvideo .ic::after{content:'';position:absolute;left:56%;top:50%;transform:translate(-50%,-50%);border-style:solid;border-width:4px 0 4px 7px;border-color:transparent transparent transparent #fff}
+.crail-nav{display:flex;gap:10px;justify-content:flex-end;margin-top:4px}
+.cnav{width:42px;height:42px;border-radius:50%;border:1px solid #86868E;background:#fff;color:var(--ink);font-size:17px;cursor:pointer;transition:border-color .15s ease,transform .15s ease} /* #86868E: 3.31:1 на #F2F5FC — порог UI 3:1 */
+.cnav:hover{border-color:var(--ink);transform:translateY(-1px)}
+.cnav:disabled{opacity:.35;cursor:default;transform:none}
+@media (max-width:640px){
+  .crail{grid-auto-columns:86vw;padding-bottom:20px}
+  .crail-nav{display:none} /* на таче листают пальцем */
+}
+
 /* ---------- CTA-полоса ---------- */
 .band{background:var(--bg2);text-align:center}
 .band h2{font-size:clamp(28px,4vw,46px);max-width:680px;margin:0 auto}
@@ -889,6 +924,124 @@ footer a:hover{text-decoration:underline}
   </div>
 </section>
 
+<section class="cases" aria-labelledby="cases-title">
+  <div class="wrap-wide">
+    <div class="sec-head reveal">
+      <h2 id="cases-title">Результаты выпускников</h2>
+      <p>С чем люди пришли на программу и к чему пришли — от первого лица, в фактах и цифрах.</p>
+    </div>
+    <div class="crail-shell reveal">
+      <div class="crail" id="crail" tabindex="0" role="region" aria-label="Кейсы выпускников — прокручивайте, чтобы увидеть больше">
+    <!-- CASES:START -->
+<article class="ccard">
+  <div class="ccard-top"><img src="assets/people/p1_02_tamilla_buhmiller.jpg?v=1786113146" alt="Тамилла Бухмиллер" width="120" height="120" loading="lazy"><div><h3 class="cname">Тамилла Бухмиллер</h3><div class="crole">клинический психолог, психотерапевт</div></div></div>
+  <div class="cab">
+    <div class="row was"><span>частная терапевтическая практика, потолок по чеку</span></div>
+    <div class="row now"><span>500 000 ₽ за первый месяц коучинга, затем 1,3 млн ₽/мес; свой тренинг и книга</span></div>
+  </div>
+  <q>Всё сложилось в 10 раз ярче. Я даже не предполагала, что вообще вот так всё может закрутиться и развиться.</q>
+  <button class="cvideo" data-video="https://kinescope.io/embed/2qUaNpQuDxBaRTFfddXxmS" data-name="Тамилла Бухмиллер" data-quote="«Это единственное обучение, которое я прошла от корки до корки, не пропустив ни одного занятия, потому что мне было очень интересно.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
+</article>
+<article class="ccard">
+  <div class="ccard-top"><img src="assets/people/p3_02_yaroslav_mudriy.jpg?v=1786113146" alt="Ярослав Мудрый" width="120" height="120" loading="lazy"><div><h3 class="cname">Ярослав Мудрый</h3><div class="crole">коуч, практика онлайн</div></div></div>
+  <div class="cab">
+    <div class="row was"><span>год стагнации и растерянности, доход упёрся в потолок</span></div>
+    <div class="row now"><span>первые 500 € на коучинге уже в начале обучения; практика переведена в онлайн, коучинг стал основным делом</span></div>
+  </div>
+  <q>Я поменял свои взгляды, поменял своё мышление — моя жизнь поменялась на 180 градусов.</q>
+  <button class="cvideo" data-video="https://kinescope.io/embed/s2vdGLA5Q6VXKdDaojsjNo" data-name="Ярослав Мудрый" data-quote="«Для меня вы теперь просто как семья. Если не идти на Level 2, что я буду делать по субботам?»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
+</article>
+<article class="ccard">
+  <div class="ccard-top"><img src="assets/people/p1_27_yaromila_yulanova.jpg?v=1786113146" alt="Яромила Юланова" width="120" height="120" loading="lazy"><div><h3 class="cname">Яромила Юланова</h3><div class="crole">предприниматель, 55 пунктов выдачи WB</div></div></div>
+  <div class="cab">
+    <div class="row was"><span>сильный бизнес, но «жизнь по накатанной» и директивное управление</span></div>
+    <div class="row now"><span>коуч ICF с доходом 3 700 € в месяц, коучинг встроен в продукт, запущен YouTube-проект</span></div>
+  </div>
+  <q>В масштабе всего, что со мной произошло — я реально сорвала куш. Идите в коучинг, если хотите прожить жизнь по плюсу.</q>
+  <button class="cvideo" data-video="https://kinescope.io/embed/6NjH16KYq4wyHMNEwH6c9H" data-name="Яромила Юланова" data-quote="«Теперь у меня такой бриллиант в виде коучинга — мне кажется, это незаменимый скилл для помогающего специалиста.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
+</article>
+<article class="ccard">
+  <div class="ccard-top"><img src="assets/people/p3_06_nina_marabyan.jpg?v=1786113146" alt="Нина Марабян" width="120" height="120" loading="lazy"><div><h3 class="cname">Нина Марабян</h3><div class="crole">выпускница 3 потока</div></div></div>
+  <div class="cab">
+    <div class="row was"><span>без своего дохода, «не знала, чего хочу от жизни и куда идти»</span></div>
+    <div class="row now"><span>долгосрочные клиентские контракты, пост с одним коучинговым вопросом набрал 55 000 в Threads</span></div>
+  </div>
+  <q>Ты понимаешь: ты крутой — и у тебя всё обязательно стартанёт и получится. Коучинг — это взлёт.</q>
+  <button class="cvideo" data-video="https://kinescope.io/embed/5Jm33oDy8Muxd75U39WjFW" data-name="Нина Марабян" data-quote="«Моё окружение замечает, как я меняюсь и трансформируюсь — и как отваливаются те люди, которым моя трансформация не пришлась по нутру.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
+</article>
+<article class="ccard">
+  <div class="ccard-top"><img src="assets/people/p1_01_mariya_silaeva.jpg?v=1786113146" alt="Мария Силаева" width="120" height="120" loading="lazy"><div><h3 class="cname">Мария Силаева</h3><div class="crole">коуч ICF</div></div></div>
+  <div class="cab">
+    <div class="row was"><span>работа с клиентами без международного статуса</span></div>
+    <div class="row now"><span>собрала свою группу и заработала 5 700 € ещё во время обучения</span></div>
+  </div>
+  <q>Выхожу из процесса обучения с новым уровнем уверенности и ценности себя как профессионала.</q>
+  <button class="cvideo" data-video="https://kinescope.io/embed/srLE43FYwnFvAygTfB5VAg" data-name="Мария Силаева" data-quote="«Это моя третья коучинговая сертификация, но всё это были серии случайных свиданий, а вот это, походу, настоящая любовь.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
+</article>
+<article class="ccard">
+  <div class="ccard-top"><img src="assets/people/p2_13_valeriya_pozhichkevich.jpg?v=1786124448" alt="Валерия Пожичкевич" width="120" height="120" loading="lazy"><div><h3 class="cname">Валерия Пожичкевич</h3><div class="crole">5+ лет в инфобизнесе на руководящих ролях</div></div></div>
+  <div class="cab">
+    <div class="row was"><span>переросла наёмные проекты, год в поиске: «чем заниматься так, чтобы по-настоящему зажигало?»</span></div>
+    <div class="row now"><span>нашла миссию и призвание в коучинге, выстроила план реализации; отношения в семье вышли на новый уровень</span></div>
+  </div>
+  <q>Я обрела то, что искала сердцем. Очень чётко понимаю, что сделала правильный выбор.</q>
+  <button class="cvideo" data-video="https://kinescope.io/embed/tuZRuDs9ENsNToQRxxZgyE" data-name="Валерия Пожичкевич" data-quote="«Мне не нужны другие. У меня матч уже случился, мне нужен именно этот преподаватель. И меня вообще не волнует, у кого сколько регалий, сертификатов.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
+</article>
+<article class="ccard">
+  <div class="ccard-top"><img src="assets/people/p1_21_olga_timonina.jpg?v=1786113146" alt="Ольга Тимонина" width="120" height="120" loading="lazy"><div><h3 class="cname">Ольга Тимонина</h3><div class="crole">предприниматель, коуч ICF</div></div></div>
+  <div class="cab">
+    <div class="row was"><span>помогающая практика как хобби, без системы и ниши</span></div>
+    <div class="row now"><span>ниша и аудитория найдены прямо на курсе, собрала группу на 2 500 € — обучение окупается</span></div>
+  </div>
+  <q>Тебя настолько сильно крутят со всех сторон, что у тебя нет ни одного шанса остаться прежним.</q>
+  <button class="cvideo" data-video="https://kinescope.io/embed/eUxz8sa19yxVXog1bprrXr" data-name="Ольга Тимонина" data-quote="«Это как раз усиление всех наших личностных, профессиональных качеств, расширение сознания и очень глубоких трансформаций.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
+</article>
+<article class="ccard">
+  <div class="ccard-top"><img src="assets/people/p3_09_nursulu_tsupko.jpg?v=1786113146" alt="Нурсулу Цупко" width="120" height="120" loading="lazy"><div><h3 class="cname">Нурсулу Цупко</h3><div class="crole">эксперт, выпускница 3 потока</div></div></div>
+  <div class="cab">
+    <div class="row was"><span>боялась проявляться, коучинг был одним из направлений «на пробу»</span></div>
+    <div class="row now"><span>пошла в проявленность: охваты рилс выросли на 100%, два клиента в долгом контракте, впереди Level 2</span></div>
+  </div>
+  <q>Здесь человек реально получает не только теорию, но и навык работать с клиентами.</q>
+  <button class="cvideo" data-video="https://kinescope.io/embed/0p7dy34naZgDuaex1zTGF8" data-name="Нурсулу Цупко" data-quote="«Я пошла в проявленность: рилсы у меня выросли ровно на сто процентов. Раньше я боялась это делать, теперь появилась структура, меньше страха и больше уверенности.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
+</article>
+<article class="ccard">
+  <div class="ccard-top"><img src="assets/people/p3_10_artur_belyi.jpg?v=1786124244" alt="Артур Белый" width="120" height="120" loading="lazy"><div><h3 class="cname">Артур Белый</h3><div class="crole">руководитель B2B-продаж, финансовый сектор</div></div></div>
+  <div class="cab">
+    <div class="row was"><span>директивный стиль: «слушать людей вообще не способен — обычно это меня должны слушать»</span></div>
+    <div class="row now"><span>ведёт коуч-сессии, перестроил управление командой: больше вопросов, меньше давления — результаты растут</span></div>
+  </div>
+  <q>Сотрудники кайфуют: я стал задавать им больше вопросов и меньше давить.</q>
+  <button class="cvideo" data-video="https://kinescope.io/embed/4ABtau8B6kxYtDFDchBpjk" data-name="Артур Белый" data-quote="«Общаться со мной крайне трудно, но Екатерина нашла со мной общий язык. Я здесь очень много чему научился.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
+</article>
+<article class="ccard">
+  <div class="ccard-top"><img src="assets/people/p3_13_natalya_kozlova.jpg?v=1786113146" alt="Наталья Козлова" width="120" height="120" loading="lazy"><div><h3 class="cname">Наталья Козлова</h3><div class="crole">преподаватель финансовой грамотности</div></div></div>
+  <div class="cab">
+    <div class="row was"><span>выгорание и уверенность, что «я и коучинг — несопоставимо»</span></div>
+    <div class="row now"><span>внутренняя гармония, разобраны давно отложенные сферы жизни, открылся новый путь развития</span></div>
+  </div>
+  <q>Если вам пришла мысль о том, что надо учиться в Академии — она уже не зря пришла.</q>
+  <button class="cvideo" data-video="https://kinescope.io/embed/ug8ffM1tBU5QGnPL4qPM73" data-name="Наталья Козлова" data-quote="«Мы настолько сблизились, что мы уже как одно целое — как сплелись корни разных деревьев, их уже сложно расплетать.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
+</article>
+<article class="ccard">
+  <div class="ccard-top"><img src="assets/people/p3_01_marina_getman.jpg?v=1786113146" alt="Марина Гетман" width="120" height="120" loading="lazy"><div><h3 class="cname">Марина Гетман</h3><div class="crole">выпускница 3 потока</div></div></div>
+  <div class="cab">
+    <div class="row was"><span>неуверенность в себе, не знала, какие вопросы задавать людям с их проблемами</span></div>
+    <div class="row now"><span>уверенность и навык сильных открытых вопросов — использует их в своей основной работе</span></div>
+  </div>
+  <q>Академия дала мне возможность быть более уверенной и более открытой. Иди, не сомневайся.</q>
+  <button class="cvideo" data-video="https://kinescope.io/embed/4z5ZXQjQHoV57SZ2vN1c79" data-name="Марина Гетман" data-quote="«Я благодарна себе, что очень переживала, что не сдам менторинг, и что всё получилось.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
+</article>
+    <!-- CASES:END -->
+      </div>
+      <div class="crail-nav">
+        <button class="cnav" id="cprev" type="button" aria-label="Предыдущие кейсы">&#8592;</button>
+        <button class="cnav" id="cnext" type="button" aria-label="Следующие кейсы">&#8594;</button>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section class="band" aria-labelledby="band-title">
   <div class="wrap reveal">
     <h2 id="band-title">Хотите пройти этот путь?</h2>
@@ -1015,6 +1168,26 @@ footer a:hover{text-decoration:underline}
     updateBtn();
   });
   updateBtn();
+
+  /* карусель кейсов */
+  var rail = document.getElementById('crail');
+  if (rail) {
+    var step = function(){ var c = rail.querySelector('.ccard'); return c ? c.getBoundingClientRect().width + 20 : 420; };
+    var prev = document.getElementById('cprev'), next = document.getElementById('cnext');
+    var railBehavior = matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth';
+    function syncNav(){
+      var atEnd = rail.scrollLeft > rail.scrollWidth - rail.clientWidth - 10;
+      rail.classList.toggle('at-end', atEnd);
+      if (!prev) return;
+      prev.disabled = rail.scrollLeft < 10;
+      next.disabled = atEnd;
+    }
+    if (prev) prev.addEventListener('click', function(){ rail.scrollBy({left: -step(), behavior: railBehavior}); });
+    if (next) next.addEventListener('click', function(){ rail.scrollBy({left: step(), behavior: railBehavior}); });
+    rail.addEventListener('scroll', syncNav, {passive:true});
+    window.addEventListener('resize', syncNav, {passive:true});
+    syncNav();
+  }
 
   /* шапка: темнеть над тёмным финалом (штатный ih-light следит только за верхом страницы).
      Слушатель добавлен ПОСЛЕ скрипта шапки, поэтому на каждом scroll выполняется последним и побеждает. */

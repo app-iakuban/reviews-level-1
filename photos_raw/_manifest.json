@@ -1,0 +1,456 @@
+[
+ {
+  "key": "p1_01_mariya_silaeva",
+  "name": "Мария Силаева",
+  "source": "telegram",
+  "detail": "@Mary_Silaeva: чат ICF Level 1 [1], Mary Silaeva | Коуч",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_02_tamilla_buhmiller",
+  "name": "Тамилла Бухмиллер",
+  "source": "telegram",
+  "detail": "@dr_buhmiller: Выпускники Iakuban, точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_03_andrey_konovalov",
+  "name": "Андрей Коновалов",
+  "source": "telegram",
+  "detail": "@konovalov_online: чат ICF Level 1 [1], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_04_anna_aleksandrova",
+  "name": "Анна Александрова",
+  "source": "telegram",
+  "detail": "@anngel_aleks: чат ICF Level 1 [1], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_05_anna_borisovskaya",
+  "name": "Анна Борисовская",
+  "source": "telegram",
+  "detail": "@Ann_Borisovskaya: чат ICF Level 1 [1], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_06_valeriya_lyubimova",
+  "name": "Валерия Любимова",
+  "source": "telegram",
+  "detail": "@lyubimova_valeriya: чат ICF Level 1 [1], Любимова Лера",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_07_denis_boyko",
+  "name": "Денис Бойко",
+  "source": "telegram",
+  "detail": "@Denis_V_Boyko: чат ICF Level 1 [1], Денис @Denis_V_Boyko",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_08_dmitriy_melehov",
+  "name": "Дмитрий Мелехов",
+  "source": "telegram",
+  "detail": "@Dima_delo: чат ICF Level 1 [1], в TG пишется Мелихов",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_09_evgeniya_barchenkova",
+  "name": "Евгения Барченкова",
+  "source": "telegram",
+  "detail": "@EvgeniaBar: чат ICF Level 1 [1], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_10_elena_starovoytova",
+  "name": "Елена Старовойтова",
+  "source": "telegram",
+  "detail": "@ElenaStarovoytova69: чат ICF Level 1 [1], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_11_elena_chernyaeva",
+  "name": "Елена Черняева",
+  "source": "telegram",
+  "detail": "@Ev_chernyaeva: чат ICF Level 1 [1], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_12_irina_plohova",
+  "name": "Ирина Плохова",
+  "source": "telegram",
+  "detail": "глобальный поиск TG: @plohovairina, точное имя «Ирина Плохова»; в чатах академии не найдена",
+  "confidence": "medium",
+  "note": "личность не подтверждена чатом потока — глянуть глазами"
+ },
+ {
+  "key": "p1_13_liliya_hayrutdinova",
+  "name": "Лилия Хайрутдинова",
+  "source": "telegram",
+  "detail": "@LiLi_LaLy: личка team-аккаунта, точное имя",
+  "confidence": "high",
+  "note": "в солнечных очках"
+ },
+ {
+  "key": "p1_15_mariya_ilinova",
+  "name": "Мария Ильинова",
+  "source": "telegram",
+  "detail": "@marya_ilinova: чат ICF Level 1 [1], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_16_mariya_mayer",
+  "name": "Мария Майер",
+  "source": "telegram",
+  "detail": "@Mayer_Mary: чат ICF Level 1 [1], Mariya Mayer",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_17_mariya_luntsova",
+  "name": "Мария Лунцова",
+  "source": "telegram",
+  "detail": "@Maria_Luntsova: чат ICF Level 1 [1], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_18_irina_ivanenkova",
+  "name": "Ирина Иваненкова",
+  "source": "telegram",
+  "detail": "@irinaivanenkova: Чат выпускников Iakuban, точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_19_nataliya_kolpakova",
+  "name": "Наталия Колпакова",
+  "source": "telegram",
+  "detail": "@Kolpakova_Natalia: чат ICF Level 1 [1], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_20_nuriya_tkacheva",
+  "name": "Нурия Ткачёва",
+  "source": "telegram",
+  "detail": "@nuria_ava: чат ICF Level 1 [1], Нурия Ткачева",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_21_olga_timonina",
+  "name": "Ольга Тимонина",
+  "source": "telegram",
+  "detail": "@timonina_olga_viktorovna: чат ICF Level 1 [1], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_22_olga_gavrilyuk",
+  "name": "Ольга Гаврилюк",
+  "source": "platform",
+  "detail": "iakuban.com/coaches → cdn.iakuban.com/avatars, профиль коуча «Ольга Гаврилюк-Пыныло»",
+  "confidence": "high",
+  "note": "435px"
+ },
+ {
+  "key": "p1_23_tatyana_konovka",
+  "name": "Татьяна Коновка",
+  "source": "telegram",
+  "detail": "@konovka_tatyana: чат ICF Level 1 [1], Коновка Татьяна",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_24_tatyana_koryakina",
+  "name": "Татьяна Корякина",
+  "source": "telegram",
+  "detail": "@Ktp73: чат ICF Level 1 [1], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_25_yuliya_mhitaryan",
+  "name": "Юлия Мхитарян",
+  "source": "telegram",
+  "detail": "@juliya_mh: чат ICF Level 1 [1], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_26_yuriy_reyz",
+  "name": "Юрий Рэйз",
+  "source": "telegram",
+  "detail": "@Yuri_Raise: Чат выпускников Iakuban, точное имя",
+  "confidence": "high",
+  "note": "в солнечных очках"
+ },
+ {
+  "key": "p1_27_yaromila_yulanova",
+  "name": "Яромила Юланова",
+  "source": "telegram",
+  "detail": "@milayulanova: чат ICF Level 1 [1], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_28_aiday_chorobaeva",
+  "name": "Айдай Чоробаева",
+  "source": "telegram",
+  "detail": "@Aidai_Chorobaeva: чат ICF Level 1 [1], Aidai Chorobaeva",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_29_nadya_eliseeva",
+  "name": "Надя Елисеева",
+  "source": "telegram",
+  "detail": "@nadiaeliseeva: чат ICF Level 1 [1], Nadia Eliseeva",
+  "confidence": "high"
+ },
+ {
+  "key": "p1_30_tatyana_yakovleva",
+  "name": "Татьяна Яковлева",
+  "source": "telegram",
+  "detail": "@taty_iak: чат ICF Level 1 [1], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p2_01_andrey_idrisov",
+  "name": "Андрей Идрисов",
+  "source": "telegram",
+  "detail": "@idrisuss: чат ICF Level 1 [2], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p2_02_ekaterina_baltabaeva",
+  "name": "Екатерина Балтабаева",
+  "source": "telegram",
+  "detail": "@Uzbekiston_qizi «Екатерина 🌹🌹🌹» — единственная неучтённая Екатерина в чате потока 2, также в «Ассистенты Level 1 [3]/[4]»; фамилии в профиле нет",
+  "confidence": "low",
+  "note": "ПРОВЕРИТЬ ГЛАЗАМИ: личность не подтверждена документально"
+ },
+ {
+  "key": "p2_03_veniamin_kozlovskiy",
+  "name": "Вениамин Козловский",
+  "source": "telegram",
+  "detail": "@ven_healing: чат ICF Level 1 [2], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p2_04_katerina_kurteva",
+  "name": "Катерина Куртева",
+  "source": "telegram",
+  "detail": "@katty_from_FB: чат ICF Level 1 [2], Kateryna Kurtieva",
+  "confidence": "high"
+ },
+ {
+  "key": "p2_05_elena_dolgopolova",
+  "name": "Елена Долгополова",
+  "source": "telegram",
+  "detail": "@ElenaDolgopo_love: чат ICF Level 1 [2], Elena Dolgopolova",
+  "confidence": "high"
+ },
+ {
+  "key": "p2_06_ilona_dzhavahishvili",
+  "name": "Илона Джавахишвили",
+  "source": "telegram",
+  "detail": "@ilonadiv: чат ICF Level 1 [2], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p2_07_irina_suponina",
+  "name": "Ирина Супонина",
+  "source": "none",
+  "detail": "TG найден (@wellness_advice), но аватарки нет; в DM только скриншоты; на платформе нет",
+  "confidence": "none"
+ },
+ {
+  "key": "p2_08_leysan_ahmetshina",
+  "name": "Лейсан Ахметшина",
+  "source": "telegram",
+  "detail": "@salema86: личка team, точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p2_09_marina_doroshko",
+  "name": "Марина Дорошко",
+  "source": "platform",
+  "detail": "iakuban.com/coaches → cdn.iakuban.com/avatars (фронтальный портрет вместо концертного фото из TG)",
+  "confidence": "high",
+  "note": "245px — меньше идеала, но лицо крупно"
+ },
+ {
+  "key": "p2_10_mariya_gnitsevich",
+  "name": "Мария Гницевич",
+  "source": "telegram",
+  "detail": "@belltamo: личка team, точное имя",
+  "confidence": "high",
+  "note": "лицо некрупно (сидит в полный рост)"
+ },
+ {
+  "key": "p2_11_mariya_kokourova",
+  "name": "Мария Кокоурова",
+  "source": "platform",
+  "detail": "iakuban.com/coaches → cdn.iakuban.com/avatars (в TG аватарки нет)",
+  "confidence": "high",
+  "note": "512px"
+ },
+ {
+  "key": "p2_12_nataliya_morugina",
+  "name": "Наталия Моругина",
+  "source": "telegram",
+  "detail": "@biochackni: чат ICF Level 1 [2], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p2_13_valeriya_pozhichkevich",
+  "name": "Валерия Пожичкевич",
+  "source": "telegram",
+  "detail": "@Valeriakursk: чат ICF Level 1 [2], точное имя",
+  "confidence": "high",
+  "note": "селфи в солнечных очках"
+ },
+ {
+  "key": "p2_14_polina_kartashova",
+  "name": "Полина Карташова",
+  "source": "telegram",
+  "detail": "@Power52345: чат ICF Level 1 [2], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p2_15_redzhana_gusmanova",
+  "name": "Реджана Гусманова",
+  "source": "telegram",
+  "detail": "@space_of_life: личка team, точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p2_16_svetlana_ponasenko",
+  "name": "Светлана Понасенко",
+  "source": "telegram",
+  "detail": "@SvetChern: личка team, точное имя",
+  "confidence": "high",
+  "note": "лицо мелкое (фигура в поле) — возможно кропнуть"
+ },
+ {
+  "key": "p2_17_svyatoslav_rodionov",
+  "name": "Святослав Родионов",
+  "source": "telegram",
+  "detail": "@soundmindvoice «Svetoslav | creative coach» — найден по упоминанию в чате потока 2; фамилии в профиле нет",
+  "confidence": "medium",
+  "note": "единственный Святослав потока 2; сверить глазами"
+ },
+ {
+  "key": "p2_18_tatyana_bogunova",
+  "name": "Татьяна Богунова",
+  "source": "telegram",
+  "detail": "@bogunova_t: чат ICF Level 1 [2], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p2_19_tatyana_klimkova",
+  "name": "Татьяна Климкова",
+  "source": "telegram",
+  "detail": "@tanya_klimkova: личка team, Tanya Klimkova",
+  "confidence": "high"
+ },
+ {
+  "key": "p2_20_yuliya_streltsova",
+  "name": "Юлия Стрельцова",
+  "source": "telegram",
+  "detail": "@yulijastreltsova: канал ICF Level 1 [2], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p3_01_marina_getman",
+  "name": "Марина Гетман",
+  "source": "telegram",
+  "detail": "@MariGetman: чат ICF Level 1 [3], Marina Getman",
+  "confidence": "high"
+ },
+ {
+  "key": "p3_02_yaroslav_mudriy",
+  "name": "Ярослав Мудрый",
+  "source": "telegram",
+  "detail": "@Jaroslav_Mudrij: личка team, точное имя",
+  "confidence": "high",
+  "note": "в солнечных очках (гора)"
+ },
+ {
+  "key": "p3_03_elena_shik",
+  "name": "Елена Шик",
+  "source": "telegram",
+  "detail": "@elena_schick_psy: чат ICF Level 1 [3], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p3_04_irina_nakonechnaya",
+  "name": "Ирина Наконечная",
+  "source": "telegram",
+  "detail": "@irinan_coach: личка team, точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p3_05_linara_abdrafigina",
+  "name": "Линара Абдрафигина",
+  "source": "telegram",
+  "detail": "@Linara_Quattro: чат ICF Level 1 [3], Linara Abdrafigina",
+  "confidence": "high"
+ },
+ {
+  "key": "p3_06_nina_marabyan",
+  "name": "Нина Марабян",
+  "source": "telegram",
+  "detail": "@Nina_Marabian: чат ICF Level 1 [3], Nina Marabian",
+  "confidence": "high"
+ },
+ {
+  "key": "p3_07_nina_savin",
+  "name": "Нина Савин",
+  "source": "none",
+  "detail": "TG найдена (@NiSa_HZ), но аватар — логотип, лица нет; история аватарок пуста; в DM только скриншот платежа",
+  "confidence": "none"
+ },
+ {
+  "key": "p3_08_marina_belaya",
+  "name": "Марина Белая",
+  "source": "telegram",
+  "detail": "@Marina_Balaia: чат ICF Level 1 [3], Marina Belaia",
+  "confidence": "high"
+ },
+ {
+  "key": "p3_09_nursulu_tsupko",
+  "name": "Нурсулу Цупко",
+  "source": "telegram",
+  "detail": "@nursltspk: личка team, точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p3_10_artur_belyi",
+  "name": "Артур Белый",
+  "source": "none",
+  "detail": "TG найден (@Arthur_Beliy, чат потока 3), аватарки нет; в чате и DM только мемы/скриншоты",
+  "confidence": "none"
+ },
+ {
+  "key": "p3_11_marya_surnina",
+  "name": "Марья Сурнина",
+  "source": "telegram",
+  "detail": "@mary_psy_pro: личка team, Сурнина Марья",
+  "confidence": "high"
+ },
+ {
+  "key": "p3_12_olga_meerbach",
+  "name": "Ольга Меербах",
+  "source": "telegram",
+  "detail": "@Olga_olga_meer: Ассистенты Level 1 [4], точное имя",
+  "confidence": "high"
+ },
+ {
+  "key": "p3_13_natalya_kozlova",
+  "name": "Наталья Козлова",
+  "source": "telegram",
+  "detail": "@NataNikolaevna: чат ICF Level 1 [3], Наталья Козлова",
+  "confidence": "high"
+ },
+ {
+  "key": "p3_14_ekaterina_baltabaeva",
+  "name": "Екатерина Балтабаева",
+  "source": "telegram",
+  "detail": "копия p2_02 — тот же человек (@Uzbekiston_qizi)",
+  "confidence": "low",
+  "note": "см. p2_02"
+ }
+]

@@ -174,7 +174,7 @@ def jsonld(ordered, kmap):
         items.append({"@type": "ListItem", "position": pos, "item": video})
     org = {
         "@type": "EducationalOrganization",
-        "@id": "https://iakuban.com#organization",
+        "@id": "https://iakuban.com/#organization",
         "name": "Iakuban Coaching Academy",
         "alternateName": [
             "Академия коучинга Алексея Якубана",
@@ -183,7 +183,7 @@ def jsonld(ordered, kmap):
             "IAKUBAN COACHING ACADEMY S.L.",
         ],
         "url": "https://iakuban.com",
-        "founder": {"@type": "Person", "name": "Алексей Якубан", "alternateName": "Aleksei Iakuban"},
+        "founder": {"@type": "Person", "@id": "https://iakuban.com/#person", "name": "Алексей Якубан", "alternateName": "Aleksei Iakuban"},
     }
     data = {
         "@context": "https://schema.org",
@@ -192,7 +192,7 @@ def jsonld(ordered, kmap):
         "description": f"Отзывы выпускников об академии коучинга Алексея Якубана: {len(ordered)} видеоистории о программе подготовки коучей — записаны в день вручения сертификатов, без сценария.",
         "url": BASE_URL,
         "inLanguage": "ru",
-        "about": {"@id": "https://iakuban.com#organization"},
+        "about": {"@id": "https://iakuban.com/#organization"},
         "publisher": org,
         "isPartOf": {"@type": "WebSite", "name": "Iakuban Coaching Academy", "url": "https://iakuban.com"},
         "mainEntity": {"@type": "ItemList", "numberOfItems": len(ordered), "itemListElement": items},

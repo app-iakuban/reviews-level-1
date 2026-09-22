@@ -26,12 +26,33 @@ document.addEventListener("DOMContentLoaded", function(event) {
   window.cookiehub.load(cpm);
 });
 </script>
-<!-- Google Analytics (GA4) G-Y2D060K2Z4 + Google Ads AW-17650633966 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Y2D060K2Z4"></script>
+<!-- Google Analytics (GA4) G-Y2D060K2Z4 + Google Ads AW-17650633966.
+ Внутренний режим (?internal=1, флаг в localStorage) счётчики не поднимает:
+ наши проверки сайта не должны идти ни в GA4, ни в Метрику. Тот же ключ читает
+ Nuxt (nuxt-src/lib/internalMode.ts) и чат (chat-widget.js). -->
 <script>
-gtag('js',new Date());
-gtag('config','G-Y2D060K2Z4');
-gtag('config','AW-17650633966');
+(function(){
+ var internal=false;
+ try{
+  var p=new URLSearchParams(location.search).get('internal');
+  if(p==='1')localStorage.setItem('iakuban_internal','1');
+  if(p==='0'||p==='false')localStorage.removeItem('iakuban_internal');
+  internal=localStorage.getItem('iakuban_internal')==='1';
+ }catch(e){}
+ if(internal){
+  document.addEventListener('DOMContentLoaded',function(){
+   var t=document.querySelectorAll('script[type="text/plain"][data-consent]');
+   for(var i=0;i<t.length;i++)t[i].parentNode.removeChild(t[i]);
+  });
+  return;
+ }
+ var s=document.createElement('script');
+ s.async=true;s.src='https://www.googletagmanager.com/gtag/js?id=G-Y2D060K2Z4';
+ document.head.appendChild(s);
+ gtag('js',new Date());
+ gtag('config','G-Y2D060K2Z4');
+ gtag('config','AW-17650633966');
+})();
 </script>
 <!-- Yandex.Metrika 109783359 — разблокируется CookieHub'ом только при согласии на analytics;
      вебвизор выключен (отдельного согласия на запись сессий нет) -->
@@ -42,10 +63,10 @@ gtag('config','AW-17650633966');
   (window,document,"script","https://mc.yandex.ru/metrika/tag.js","ym");
   ym(109783359,"init",{clickmap:true,trackLinks:true,accurateTrackBounce:true,webvisor:false});
 </script>
-<title>Отзывы об академии Алексея Якубана: видеоотзывы выпускников | Iakuban Coaching Academy</title>
-<meta name="description" content="Отзывы выпускников об академии коучинга Алексея Якубана (Iakuban Coaching Academy): 63 видеоистории о программе подготовки коучей по стандартам ICF — записаны в день вручения сертификатов, без сценария.">
+<title>Отзывы об академии Алексея Якубана: 63 видео выпускников</title>
+<meta name="description" content="63 видеоистории выпускников академии коучинга Алексея Якубана о программе подготовки коучей по стандартам ICF. Записаны в день вручения, без сценария.">
 <meta property="og:title" content="Отзывы об академии Алексея Якубана: видеоотзывы выпускников">
-<meta property="og:description" content="Отзывы выпускников об академии коучинга Алексея Якубана (Iakuban Coaching Academy): 63 видеоистории о программе подготовки коучей по стандартам ICF — записаны в день вручения сертификатов, без сценария.">
+<meta property="og:description" content="63 видеоистории выпускников академии коучинга Алексея Якубана о программе подготовки коучей по стандартам ICF. Записаны в день вручения сертификатов, без сценария.">
 <meta property="og:site_name" content="Iakuban Coaching Academy">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://iakuban.com/reviews/level-1/">
@@ -298,6 +319,7 @@ footer a:hover{text-decoration:underline}
   font-size:14px;line-height:1.3;color:#28345B;text-decoration:none;white-space:nowrap;
   transition:background .15s}
 .ih-dd-menu a:hover{background:rgba(69,85,211,.05)}
+.ih-dd-hint{display:block;margin-top:2px;font-size:12px;line-height:1.25;color:#8A93AD;font-weight:400}
 .ih-dd-menu a[aria-current="page"]{background:rgba(69,85,211,.07);font-weight:500}
 
 /* ─── кнопки справа ─── */
@@ -331,6 +353,7 @@ footer a:hover{text-decoration:underline}
 .ih-m-sub.is-open{display:flex}
 .ih-m-sub a{padding:8px 0;font-size:14px;color:rgba(255,255,255,.5);text-decoration:none;transition:color .2s}
 .ih-m-sub a:hover,.ih-m-sub a[aria-current="page"]{color:#fff}
+.ih-m-sub .ih-dd-hint{color:rgba(255,255,255,.42)}
 /* только текстовые пункты: у кнопок .ih-btn-* свои цвета и паддинги */
 .ih-mobile>.ih-m-list>a:not([class*="ih-btn-"]){padding:12px 0;font-size:16px;color:rgba(255,255,255,.7);
   text-decoration:none;transition:color .2s}
@@ -363,6 +386,7 @@ footer a:hover{text-decoration:underline}
 .ih-light .ih-m-btn:hover,.ih-light .ih-mobile>.ih-m-list>a:not([class*="ih-btn-"]):hover{color:#28345B}
 .ih-light .ih-m-sub a{color:#626C8E}
 .ih-light .ih-m-sub a:hover,.ih-light .ih-m-sub a[aria-current="page"]{color:#28345B}
+.ih-light .ih-m-sub .ih-dd-hint{color:#8A93AD}
 .ih-light a:focus-visible,.ih-light button:focus-visible{outline-color:#3D3DF0}
 @media (prefers-reduced-motion:reduce){.ih-header{transition:none}}
 </style>
@@ -380,8 +404,8 @@ footer a:hover{text-decoration:underline}
               <div class="ih-dd-menu" role="menu">
           <a href="https://iakuban.com/coaching-from-zero/">Введение в коучинг</a>
           <a href="https://iakuban.com/coaching-as-a-business/">Профессия коуч</a>
-          <a href="https://iakuban.com/icf-level-1/">Обучение коучингу. Level 1</a>
-          <a href="https://iakuban.com/icf-level-2/">Путь Алхимика. Level 2</a>
+          <a href="https://iakuban.com/icf-level-1/">Обучение коучингу<span class="ih-dd-hint">аккредитация ICF, Level 1</span></a>
+          <a href="https://iakuban.com/icf-level-2/">Продвинутая программа<span class="ih-dd-hint">аккредитация ICF, Level 2</span></a>
               </div>
             </div>
           </div>
@@ -396,8 +420,8 @@ footer a:hover{text-decoration:underline}
           <div class="ih-m-sub">
           <a href="https://iakuban.com/coaching-from-zero/">Введение в коучинг</a>
           <a href="https://iakuban.com/coaching-as-a-business/">Профессия коуч</a>
-          <a href="https://iakuban.com/icf-level-1/">Обучение коучингу. Level 1</a>
-          <a href="https://iakuban.com/icf-level-2/">Путь Алхимика. Level 2</a>
+          <a href="https://iakuban.com/icf-level-1/">Обучение коучингу<span class="ih-dd-hint">аккредитация ICF, Level 1</span></a>
+          <a href="https://iakuban.com/icf-level-2/">Продвинутая программа<span class="ih-dd-hint">аккредитация ICF, Level 2</span></a>
           </div>
           <a href="https://iakuban.com/about/">О нас</a>
         <a class="ih-btn-cta" href="https://iakuban.com/icf-level-1/">Подробнее о программе</a>
@@ -556,7 +580,7 @@ footer a:hover{text-decoration:underline}
      и тот же виджет работает и здесь, и на страницах платформы. Подключение
      живёт в шапке, потому что она уже разъезжается по всем лендингам одной
      командой и другого общего блока у статики нет. -->
-<script src="https://iakuban.com/chat-widget.js?v=20260905-1" defer></script>
+<script src="https://iakuban.com/chat-widget.js?v=20260908-1" defer></script>
 <!-- IH-HEADER:END -->
 
 <main>
@@ -569,7 +593,7 @@ footer a:hover{text-decoration:underline}
       <p class="sub">Реальные отзывы выпускников академии Алексея Якубана об аккредитованной ICF программе Level 1 подготовки коучей. Каждое видео записано в день вручения сертификата — без сценария, как есть.</p>
       <div class="cta-row">
         <a class="btn btn-primary" href="https://t.me/iakuban_team?text=%D0%97%D0%B4%D1%80%D0%B0%D0%B2%D1%81%D1%82%D0%B2%D1%83%D0%B9%D1%82%D0%B5%21%20%D0%A5%D0%BE%D1%87%D1%83%20%D0%BA%D0%BE%D0%BD%D1%81%D1%83%D0%BB%D1%8C%D1%82%D0%B0%D1%86%D0%B8%D1%8E%20%D0%BF%D0%BE%20%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B5%20Level%201.%20%D0%AF%20%D1%81%D0%BE%20%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B8%D1%86%D1%8B%20%D0%BE%D1%82%D0%B7%D1%8B%D0%B2%D0%BE%D0%B2" target="_blank" rel="noopener">Получить консультацию</a>
-        <a class="btn btn-ghost-dark" href="https://iakuban.com/icf-level-1/">О программе Level 1</a>
+        <a class="btn btn-ghost-dark" href="https://iakuban.com/icf-level-1/">О программе «Магия и наука коучинга»</a>
       </div>
     </div>
     <div class="mosaic" aria-label="Выпускники программы — нажмите, чтобы посмотреть видеоотзыв">
@@ -1002,7 +1026,7 @@ footer a:hover{text-decoration:underline}
   <div class="ccard-top"><img src="assets/people/p1_02_tamilla_buhmiller.jpg?v=1786113146" alt="Тамилла Бухмиллер" width="120" height="120" loading="lazy"><div><h3 class="cname">Тамилла Бухмиллер</h3><div class="crole">клинический психолог, психотерапевт</div></div></div>
   <div class="cab">
     <div class="row was"><span>частная терапевтическая практика, потолок по чеку</span></div>
-    <div class="row now"><span>500 000 ₽ за первый месяц коучинга, затем 1,3 млн ₽/мес; свой тренинг и книга</span></div>
+    <div class="row now"><span>коучинг стал основной практикой уже с первого месяца; свой тренинг и книга</span></div>
   </div>
   <q>Всё сложилось в 10 раз ярче. Я даже не предполагала, что вообще вот так всё может закрутиться и развиться.</q>
   <button class="cvideo" data-video="https://kinescope.io/embed/2qUaNpQuDxBaRTFfddXxmS" data-name="Тамилла Бухмиллер" data-quote="«Это единственное обучение, которое я прошла от корки до корки, не пропустив ни одного занятия, потому что мне было очень интересно.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
@@ -1011,7 +1035,7 @@ footer a:hover{text-decoration:underline}
   <div class="ccard-top"><img src="assets/people/p3_02_yaroslav_mudriy.jpg?v=1786113146" alt="Ярослав Мудрый" width="120" height="120" loading="lazy"><div><h3 class="cname">Ярослав Мудрый</h3><div class="crole">коуч, практика онлайн</div></div></div>
   <div class="cab">
     <div class="row was"><span>год стагнации и растерянности, доход упёрся в потолок</span></div>
-    <div class="row now"><span>первые 500 € на коучинге уже в начале обучения; практика переведена в онлайн, коучинг стал основным делом</span></div>
+    <div class="row now"><span>первые платные клиенты уже в начале обучения; практика переведена в онлайн, коучинг стал основным делом</span></div>
   </div>
   <q>Я поменял свои взгляды, поменял своё мышление — моя жизнь поменялась на 180 градусов.</q>
   <button class="cvideo" data-video="https://kinescope.io/embed/s2vdGLA5Q6VXKdDaojsjNo" data-name="Ярослав Мудрый" data-quote="«Для меня вы теперь просто как семья. Если не идти на Level 2, что я буду делать по субботам?»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
@@ -1020,7 +1044,7 @@ footer a:hover{text-decoration:underline}
   <div class="ccard-top"><img src="assets/people/p1_14_mariya_ivashova.jpg?v=1786113146" alt="Маша Маваши" width="120" height="120" loading="lazy"><div><h3 class="cname">Маша Маваши</h3><div class="crole">журналист и пиарщик, практикующий коуч</div></div></div>
   <div class="cab">
     <div class="row was"><span>рассеивалась на эксперименты и планирование — энергия и время уходили в никуда</span></div>
-    <div class="row now"><span>доход вырос в 5 раз; первый клиент пришёл ещё во время обучения, сейчас — долгосрочные контракты на сопровождение</span></div>
+    <div class="row now"><span>первый клиент пришёл ещё во время обучения, сейчас — долгосрочные контракты на сопровождение</span></div>
   </div>
   <q>Я пошла за глубокими трансформациями и получила глубину и смыслы больше, чем ожидала. Самый лучший день, чтобы поступить в эту академию, был вчера.</q>
   <button class="cvideo" data-video="https://kinescope.io/embed/6NSqPeg8fn83VgSLPPewmK" data-name="Маша Маваши" data-quote="«Я шла за трансформациями, и я их получила... Я взрослела душой — не просто как профессионал, как личность.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
@@ -1029,7 +1053,7 @@ footer a:hover{text-decoration:underline}
   <div class="ccard-top"><img src="assets/people/p1_27_yaromila_yulanova.jpg?v=1786113146" alt="Яромила Юланова" width="120" height="120" loading="lazy"><div><h3 class="cname">Яромила Юланова</h3><div class="crole">предприниматель, 55 пунктов выдачи WB</div></div></div>
   <div class="cab">
     <div class="row was"><span>сильный бизнес, но «жизнь по накатанной» и директивное управление</span></div>
-    <div class="row now"><span>коуч ICF с доходом 3 700 € в месяц, коучинг встроен в продукт, запущен YouTube-проект</span></div>
+    <div class="row now"><span>коуч ICF с постоянной практикой, коучинг встроен в продукт, запущен YouTube-проект</span></div>
   </div>
   <q>В масштабе всего, что со мной произошло — я реально сорвала куш. Идите в коучинг, если хотите прожить жизнь по плюсу.</q>
   <button class="cvideo" data-video="https://kinescope.io/embed/6NjH16KYq4wyHMNEwH6c9H" data-name="Яромила Юланова" data-quote="«Теперь у меня такой бриллиант в виде коучинга — мне кажется, это незаменимый скилл для помогающего специалиста.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
@@ -1047,7 +1071,7 @@ footer a:hover{text-decoration:underline}
   <div class="ccard-top"><img src="assets/people/p1_01_mariya_silaeva.jpg?v=1786113146" alt="Мария Силаева" width="120" height="120" loading="lazy"><div><h3 class="cname">Мария Силаева</h3><div class="crole">коуч ICF</div></div></div>
   <div class="cab">
     <div class="row was"><span>работа с клиентами без международного статуса</span></div>
-    <div class="row now"><span>собрала свою группу и заработала 5 700 € ещё во время обучения</span></div>
+    <div class="row now"><span>собрала свою первую группу ещё во время обучения</span></div>
   </div>
   <q>Выхожу из процесса обучения с новым уровнем уверенности и ценности себя как профессионала.</q>
   <button class="cvideo" data-video="https://kinescope.io/embed/srLE43FYwnFvAygTfB5VAg" data-name="Мария Силаева" data-quote="«Это моя третья коучинговая сертификация, но всё это были серии случайных свиданий, а вот это, походу, настоящая любовь.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
@@ -1074,7 +1098,7 @@ footer a:hover{text-decoration:underline}
   <div class="ccard-top"><img src="assets/people/p1_21_olga_timonina.jpg?v=1786113146" alt="Ольга Тимонина" width="120" height="120" loading="lazy"><div><h3 class="cname">Ольга Тимонина</h3><div class="crole">предприниматель, коуч ICF</div></div></div>
   <div class="cab">
     <div class="row was"><span>помогающая практика как хобби, без системы и ниши</span></div>
-    <div class="row now"><span>ниша и аудитория найдены прямо на курсе, собрала группу на 2 500 € — обучение окупается</span></div>
+    <div class="row now"><span>ниша и аудитория найдены прямо на курсе, первая группа собрана ещё до выпуска</span></div>
   </div>
   <q>Тебя настолько сильно крутят со всех сторон, что у тебя нет ни одного шанса остаться прежним.</q>
   <button class="cvideo" data-video="https://kinescope.io/embed/eUxz8sa19yxVXog1bprrXr" data-name="Ольга Тимонина" data-quote="«Это как раз усиление всех наших личностных, профессиональных качеств, расширение сознания и очень глубоких трансформаций.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
@@ -1198,9 +1222,8 @@ footer a:hover{text-decoration:underline}
 <footer>
   <div class="foot-in">
     <div>
-      <b style="color:#EDEDED">IAKUBAN COACHING ACADEMY, S.L.</b><br>
-      AVDA PAU CASALS, NUM 4, PORTAL A,<br>
-      08513 PRATS DE LLUÇANÈS (BARCELONA) · NIF B22895676
+      <b style="color:#EDEDED">Iakuban Coaching Academy S.L.</b><br>
+      CIF B22895676 · EU VAT ESB22895676
     </div>
     <div>
       <a href="mailto:info@iakuban.com">info@iakuban.com</a><br>

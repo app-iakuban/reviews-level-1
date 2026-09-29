@@ -4,6 +4,8 @@
 Данные: data/quotes_p{1,2,3}.json. Порядок: свежий выпуск сверху (p3 → p2 → p1).
 Фото: assets/people/<key>.jpg (из фотоохоты); если фото нет — фолбэк на
 assets/posters/<key>.jpg (кадр из Zoom). Числа-статистика — по data-stat.
+Блоки «Как проверить академию» и FAQ «Отзывы и результаты» — из data/faq.json
+(29.09.2026, этап 7 SERM: LLM-readiness), они же дают FAQPage в JSON-LD.
 
 Запуск:  python3 build.py [--media local|kinescope]
   local     — data-video = media/pN/<file>.mp4 (локальный превью)
@@ -41,11 +43,23 @@ def upload_iso(day):
     """
     return datetime.fromisoformat(day).replace(hour=12, tzinfo=MADRID).isoformat(timespec="seconds")
 
-DATE_RU = {
-    "2025-12-20": "20 декабря 2025",
-    "2026-04-11": "11 апреля 2026",
-    "2026-07-25": "25 июля 2026",
-}
+MONTHS_RU = ["января", "февраля", "марта", "апреля", "мая", "июня",
+             "июля", "августа", "сентября", "октября", "ноября", "декабря"]
+
+
+def date_ru(day):
+    """'2026-07-25' → '25 июля 2026'. Даты выпусков и дата проверки блока «Как проверить»."""
+    y, m, d = (int(x) for x in day.split("-"))
+    return f"{d} {MONTHS_RU[m - 1]} {y}"
+
+
+def plural(n, one, few, many):
+    n = abs(n)
+    if n % 10 == 1 and n % 100 != 11:
+        return one
+    if 2 <= n % 10 <= 4 and not 12 <= n % 100 <= 14:
+        return few
+    return many
 
 # Мозаика hero: 16 плиток, 4×4 на десктопе. Первые 12 — отобранные Алексеем лучшие отзывы
 # (09.08.2026): на мобилке видны ровно они (CSS прячет .mtile:nth-child(n+13)), и по первому
@@ -96,10 +110,16 @@ def video_src(cohort, item, kmap):
 
 
 def pcard(cohort, item, kmap):
+    """Карточка стены: article → кнопка-фото, h3 имя, blockquote цитата, footer с датой выпуска в time.
+
+    blockquote/footer/time — семантика типа «отзывы о компании» (skill seo-llm-readiness,
+    page_type_rules §8, 29.09.2026); классы pquote/pdur сохранены, CSS не менялся.
+    """
     key = key_of(cohort, item)
     name = html.escape(item["name"])
     quote = html.escape(item["quote"])
     src = html.escape(video_src(cohort, item, kmap))
+    grad = cohort["graduation"]
     return (
         f'<article class="pcard reveal">\n'
         f'  <button class="pcircle" data-video="{src}" data-name="{name}" data-quote="«{quote}»" '
@@ -108,8 +128,8 @@ def pcard(cohort, item, kmap):
         f'<span class="pplay" aria-hidden="true"></span>'
         f'</button>\n'
         f'  <h3>{name}</h3>\n'
-        f'  <p class="pquote">«{quote}»</p>\n'
-        f'  <p class="pdur">{DATE_RU.get(cohort["graduation"], "")}</p>\n'
+        f'  <blockquote class="pquote">«{quote}»</blockquote>\n'
+        f'  <footer class="pdur"><time datetime="{grad}">{date_ru(grad)}</time></footer>\n'
         f'</article>'
     )
 
@@ -119,6 +139,8 @@ def ccard(case, index, kmap):
 
     case: {key?, name, role, was, now, quote} — key указывает на карточку стены
     (фото + видео того же человека); без key фото берётся из photo (путь).
+    «Было/стало» размечено dl: dt «До программы» / «После программы» скрыты визуально
+    (.sr-only), но остаются в HTML — иначе парсер не понимает, какая строка «до», а какая «после».
     """
     name = html.escape(case["name"])
     role = html.escape(case.get("role", ""))
@@ -143,20 +165,58 @@ def ccard(case, index, kmap):
         f'  <div class="ccard-top">'
         f'<img src="{img}" alt="{name}" width="120" height="120" loading="lazy">'
         f'<div><h3 class="cname">{name}</h3><div class="crole">{role}</div></div></div>\n'
-        f'  <div class="cab">\n'
-        f'    <div class="row was"><span>{was}</span></div>\n'
-        f'    <div class="row now"><span>{now}</span></div>\n'
-        f'  </div>\n'
+        f'  <dl class="cab">\n'
+        f'    <div class="row was"><dt class="sr-only">До программы</dt><dd>{was}</dd></div>\n'
+        f'    <div class="row now"><dt class="sr-only">После программы</dt><dd>{now}</dd></div>\n'
+        f'  </dl>\n'
         f'  <q>{quote}</q>{vbtn}\n'
         f'</article>'
     )
 
 
 BASE_URL = "https://iakuban.com/reviews/level-1"
+PAGE_URL = BASE_URL + "/"   # канонический адрес статики — со слэшем
+PUBLISHED = "2026-08-07"     # день публикации страницы («го» Алексея 07.08.2026)
 
 
-def jsonld(ordered, kmap):
-    """CollectionPage + ItemList из VideoObject (без aggregateRating — решение Алексея №9)."""
+def load_faq():
+    f = DATA / "faq.json"
+    return json.loads(f.read_text(encoding="utf-8")) if f.exists() else None
+
+
+def fill(text, ctx):
+    """Плейсхолдеры faq.json: {total}, {total_word}, {updated_time}. Без str.format — в HTML есть фигурные скобки CSS."""
+    for k, v in ctx.items():
+        text = text.replace("{" + k + "}", v)
+    return text
+
+
+def strip_tags(s):
+    return html.unescape(re.sub(r"<[^>]+>", "", s)).replace("\xa0", " ")
+
+
+def verify_html(faq, ctx):
+    return "\n".join(
+        f'<div class="vitem">\n  <dt>{html.escape(v["dt"])}</dt>\n  <dd>{fill(v["dd"], ctx)}</dd>\n</div>'
+        for v in faq["verify"]
+    )
+
+
+def faq_html(faq, ctx):
+    out = []
+    for i, it in enumerate(faq["items"], 1):
+        out.append(
+            f'<details class="faq-item" id="faq-{i}">\n'
+            f'  <summary><h3>{html.escape(it["q"])}</h3></summary>\n'
+            f'  <div class="faq-body"><p>{fill(it["a"], ctx)}</p></div>\n'
+            f'</details>'
+        )
+    return "\n".join(out)
+
+
+def jsonld(ordered, kmap, faq, ctx):
+    """@graph: CollectionPage + ItemList из VideoObject (без aggregateRating — решение Алексея №9)
+    и FAQPage из data/faq.json (текст ответов = видимый текст без тегов)."""
     items = []
     for pos, (c, it) in enumerate(ordered, 1):
         key = key_of(c, it)
@@ -183,20 +243,54 @@ def jsonld(ordered, kmap):
             "IAKUBAN COACHING ACADEMY S.L.",
         ],
         "url": "https://iakuban.com",
-        "founder": {"@type": "Person", "@id": "https://iakuban.com/#person", "name": "Алексей Якубан", "alternateName": "Aleksei Iakuban"},
+        "logo": "https://iakuban.com/logo-512.png",
+        # sameAs — ровно три профиля из BRANDCORE 6.3 (карточка Я.Бизнеса числовой формой)
+        "sameAs": [
+            "https://www.youtube.com/@iakuban",
+            "https://t.me/iakuban",
+            "https://yandex.ru/maps/org/86349660849/",
+        ],
+        "founder": {
+            "@type": "Person",
+            "@id": "https://iakuban.com/#person",
+            "name": "Алексей Якубан",
+            "alternateName": "Aleksei Iakuban",
+            "description": "Основатель Iakuban Coaching Academy, коуч PCC ICF, 2 500+ часов коучинговой практики",
+        },
     }
-    data = {
-        "@context": "https://schema.org",
+    page = {
         "@type": "CollectionPage",
-        "name": "Отзывы об академии Алексея Якубана — видеоотзывы выпускников Level 1",
+        "@id": PAGE_URL + "#webpage",
+        "name": "Отзывы об академии Алексея Якубана: видеоотзывы выпускников первой ступени (аккредитация ICF, Level 1)",
         "description": f"Отзывы выпускников об академии коучинга Алексея Якубана: {len(ordered)} видеоистории о программе подготовки коучей — записаны в день вручения сертификатов, без сценария.",
-        "url": BASE_URL,
+        "url": PAGE_URL,
         "inLanguage": "ru",
+        "datePublished": PUBLISHED,
         "about": {"@id": "https://iakuban.com/#organization"},
         "publisher": org,
-        "isPartOf": {"@type": "WebSite", "name": "Iakuban Coaching Academy", "url": "https://iakuban.com"},
+        "isPartOf": {"@type": "WebSite", "@id": "https://iakuban.com/#website", "name": "Iakuban Coaching Academy", "url": "https://iakuban.com"},
         "mainEntity": {"@type": "ItemList", "numberOfItems": len(ordered), "itemListElement": items},
     }
+    graph = [page]
+    if faq:
+        page["dateModified"] = faq["updated"]
+        graph.append({
+            "@type": "FAQPage",
+            "@id": PAGE_URL + "#faq",
+            "url": PAGE_URL + "#faq",
+            "name": faq["faq_title"],
+            "inLanguage": "ru",
+            "isPartOf": {"@id": PAGE_URL + "#webpage"},
+            "mainEntity": [
+                {
+                    "@type": "Question",
+                    "name": it["q"],
+                    "acceptedAnswer": {"@type": "Answer", "text": strip_tags(fill(it["a"], ctx))},
+                }
+                for it in faq["items"]
+            ],
+        })
+    data = {"@context": "https://schema.org", "@graph": graph}
     return ('<script type="application/ld+json">\n'
             + json.dumps(data, ensure_ascii=False, separators=(",", ":"))
             + "\n</script>")
@@ -204,6 +298,8 @@ def jsonld(ordered, kmap):
 
 def replace_block(src, start, end, content):
     pattern = re.compile(re.escape(start) + r".*?" + re.escape(end), re.S)
+    if not pattern.search(src):
+        raise SystemExit(f"в index.html нет блока {start} … {end}")
     # lambda: content подставляется литерально (в JSON-LD есть \" — строковая замена re.sub их съедает)
     return pattern.sub(lambda m: start + "\n" + content + "\n    " + end, src)
 
@@ -211,6 +307,7 @@ def replace_block(src, start, end, content):
 def main():
     cohorts = load_cohorts()
     kmap = kinescope_map()
+    faq = load_faq()
 
     SKIP = {"p2_02_ekaterina_baltabaeva"}  # дубль: она есть в потоке 3, двойную карточку Алексей счёл ошибкой
     index = {}
@@ -248,19 +345,33 @@ def main():
     )
 
     total = len(ordered)
+    ctx = {
+        "total": str(total),
+        "total_word": plural(total, "видеоотзыв", "видеоотзыва", "видеоотзывов"),
+        "updated_time": (f'<time datetime="{faq["updated"]}">{date_ru(faq["updated"])} года</time>' if faq else ""),
+    }
     src = INDEX.read_text(encoding="utf-8")
     src = replace_block(src, "<!-- MOSAIC:START -->", "<!-- MOSAIC:END -->", "\n".join(mosaic_html))
     src = replace_block(src, "<!-- GRID:START -->", "<!-- GRID:END -->", grid_html)
     src = replace_block(src, "<!-- CASES:START -->", "<!-- CASES:END -->", cases_html)
     src = replace_block(src, "<!-- AVATARS:START -->", "<!-- AVATARS:END -->", avatars_html)
-    src = replace_block(src, "<!-- JSONLD:START -->", "<!-- JSONLD:END -->", jsonld(ordered, kmap))
+    if faq:
+        src = replace_block(src, "<!-- VERIFY:START -->", "<!-- VERIFY:END -->", verify_html(faq, ctx))
+        src = replace_block(src, "<!-- FAQ:START -->", "<!-- FAQ:END -->", faq_html(faq, ctx))
+        src = re.sub(r'(id="verify-title"[^>]*>)[^<]*', lambda m: m.group(1) + html.escape(faq["verify_title"]), src)
+        src = re.sub(r'(id="verify-intro"[^>]*>)[^<]*', lambda m: m.group(1) + html.escape(faq["verify_intro"]), src)
+        src = re.sub(r'(id="faq-title"[^>]*>)[^<]*', lambda m: m.group(1) + html.escape(faq["faq_title"]), src)
+        src = re.sub(r'(id="faq-intro"[^>]*>)[^<]*', lambda m: m.group(1) + html.escape(faq["faq_intro"]), src)
+    src = replace_block(src, "<!-- JSONLD:START -->", "<!-- JSONLD:END -->", jsonld(ordered, kmap, faq, ctx))
     src = re.sub(r'(data-stat="total"[^>]*>)[^<]*', rf'\g<1>{total}', src)
     src = re.sub(r'(data-stat="cohorts"[^>]*>)[^<]*', rf'\g<1>{len(cohorts)}', src)
     src = re.sub(r"\d+ видеоистори", f"{total} видеоистори", src)  # meta/og description — живое число
+    src = re.sub(r"\d+ видео выпускников", f"{total} видео выпускников", src)  # <title>
     INDEX.write_text(src, encoding="utf-8")
 
     n_photo = sum(1 for k in index if (PEOPLE / f"{k}.jpg").exists())
-    print(f"ok: total={total}, mosaic={len(MOSAIC)}, фото={n_photo}, фолбэк-постер={total - n_photo}, media={MEDIA_MODE}")
+    print(f"ok: total={total}, mosaic={len(MOSAIC)}, фото={n_photo}, фолбэк-постер={total - n_photo}, "
+          f"media={MEDIA_MODE}, faq={len(faq['items']) if faq else 0}, updated={faq['updated'] if faq else '-'}")
 
 
 if __name__ == "__main__":

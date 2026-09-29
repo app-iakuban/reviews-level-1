@@ -192,7 +192,11 @@ def fill(text, ctx):
 
 
 def strip_tags(s):
-    return html.unescape(re.sub(r"<[^>]+>", "", s)).replace("\xa0", " ")
+    """Текст ответа для FAQPage: все теги снимаем, кроме <a href> (Google допускает ссылки в acceptedAnswer.text;
+    без них в разметке висело бы «Ссылки: Яндекс.Карты, b17.ru…» без адресов). target/rel у ссылок убираем."""
+    s = re.sub(r'<a\s+href="([^"]+)"[^>]*>', r'<a href="\1">', s)
+    s = re.sub(r"<(?!a href=|/a>)[^>]+>", "", s)
+    return html.unescape(s).replace("\xa0", " ")
 
 
 def verify_html(faq, ctx):

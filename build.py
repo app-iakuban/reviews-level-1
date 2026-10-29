@@ -85,15 +85,15 @@ def kinescope_map():
     return json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
 
 
-COACH_TAG = ('<span class="ct-long">Ведёт сессии · записаться →</span>'
-             '<span class="ct-short">Записаться на сессию →</span>')  # короткая — на мобиле ≤600px
+COACH_TAG = ('<span class="ct-long">Профиль на платформе →</span>'
+             '<span class="ct-short">Профиль на платформе →</span>')  # короткая — на мобиле ≤600px
 
 
 def load_coaches():
     """data/coaches.json → (по key, по нормализованному имени) → slug профиля коуча на iakuban.com.
 
     Выпускник с публичным профилем на платформе получает ссылку на /<slug> (Nuxt, без слэша)
-    у имени и метку «Ведёт сессии · записаться →». Тот же файл читает /reviews/level-2/ (по имени).
+    у имени и метку «Профиль на платформе →». Тот же файл читает /reviews/level-2/ (по имени).
     """
     f = DATA / "coaches.json"
     if not f.exists():
@@ -124,7 +124,7 @@ def coach_links(slug, name_html):
     href = f"/{slug}"
     name_a = f'<a class="coach-name" href="{href}" data-coach-link="{slug}">{name_html}</a>'
     tag_a = (f'<a class="coach-tag" href="{href}" data-coach-link="{slug}" '
-             f'aria-label="Записаться на сессию: {name_html}, профиль коуча">{COACH_TAG}</a>')
+             f'aria-label="{name_html}: профиль на платформе академии">{COACH_TAG}</a>')
     return name_a, tag_a
 
 

@@ -19,11 +19,33 @@ gtag('set','url_passthrough',true);
 gtag('set','ads_data_redaction',true);
 </script>
 <!-- CookieHub CMP (домен iakuban.com, код 57650153) — до всех остальных скриптов -->
-<script src="https://cdn.cookiehub.eu/c2/57650153.js"></script>
+<!-- С 10.10.2026 CookieHub грузится через наш домен: /cookiehub/ проксирует nginx landings к cdn.cookiehub.eu.
+ CDN CookieHub на Bunny, россиянам он иногда отдаёт узел Datacamp, который ТСПУ рвёт после 16 КБ:
+ баннера нет, GA4 и Метрика не стартуют. Не загрузился с нашего домена — запасной путь на CDN.
+ load() только через iakCookiehubStart: без CookieHub страница не падает (SEO/operations/2026-10-10_cookiehub_ru_delivery.md). -->
+<script src="/cookiehub/c2/57650153.js"></script>
+<script>
+(function(){
+ var CDN='https://cdn.cookiehub.eu',own=!!window.cookiehub,opts=null,done=false;
+ function fix(){
+  var h=window.__cookiehub,p=location.origin+'/cookiehub',k=['css','assets','dist','cdn'];
+  if(!own||!h)return;
+  for(var i=0;i<k.length;i++){if(typeof h[k[i]]==='string'&&h[k[i]].indexOf(CDN)===0)h[k[i]]=p+h[k[i]].slice(CDN.length);}
+ }
+ function go(){
+  var c=window.cookiehub;
+  if(done||!opts||!c||typeof c.load!=='function')return;
+  done=true;fix();
+  try{c.load(opts);}catch(e){}
+ }
+ window.iakCookiehubStart=function(o){opts=o||{};go();};
+ if(!own){var s=document.createElement('script');s.src=CDN+'/c2/57650153.js';s.onload=go;document.head.appendChild(s);}
+})();
+</script>
 <script type="text/javascript">
 document.addEventListener("DOMContentLoaded", function(event) {
   var cpm = {};
-  window.cookiehub.load(cpm);
+  window.iakCookiehubStart(cpm);
 });
 </script>
 <!-- Google Analytics (GA4) G-Y2D060K2Z4 + Google Ads AW-17650633966.
@@ -155,6 +177,15 @@ section{padding:clamp(72px,9vw,116px) 0}
 .pcard h3{font-family:var(--text);font-weight:600;font-size:16.5px;letter-spacing:0;margin-top:16px}
 .pcard .pquote{color:var(--ink2);font-size:13.5px;line-height:1.5;margin-top:6px;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
 .pcard .pdur{display:inline-block;margin-top:8px;font-size:12px;color:var(--ink2);border:1px solid var(--line);border-radius:7px;padding:1px 10px}
+/* Выпускник ведёт сессии на платформе (29.10.2026): имя — ссылка на профиль /<slug>, под ним метка-кнопка.
+   Тач-зона ≥24px. Клик по фото по-прежнему открывает видео (ссылки вне button[data-video]). */
+.coach-name{color:inherit;text-decoration:none;display:inline-block;padding:2px 0;border-bottom:1px solid rgba(61,61,240,.35);line-height:1.3}
+.coach-name:hover,.coach-name:focus-visible{color:var(--accent);border-bottom-color:var(--accent)}
+.coach-tag{display:inline-flex;align-items:center;justify-content:center;min-height:28px;margin-top:8px;padding:4px 11px;border-radius:999px;background:rgba(61,61,240,.08);color:var(--accent);font-family:var(--text);font-size:12.5px;font-weight:500;line-height:1.3;text-decoration:none;text-align:center;transition:background .18s ease}
+.coach-tag:hover,.coach-tag:focus-visible{background:rgba(61,61,240,.16)}
+.ccard-top .coach-tag{margin-top:6px}
+.coach-tag .ct-short{display:none}
+@media (max-width:600px){.coach-tag{font-size:12px;padding:4px 10px;max-width:100%;text-wrap:balance}.coach-tag .ct-long{display:none}.coach-tag .ct-short{display:inline}}
 .more-row{text-align:center;margin-top:52px}
 
 /* ---------- кейсы (карусель) ---------- */
@@ -435,7 +466,7 @@ footer a:hover{text-decoration:underline}
             <div class="ih-dd-panel">
               <div class="ih-dd-menu" role="menu">
           <a href="https://iakuban.com/coaching-from-zero/">Введение в коучинг</a>
-          <a href="https://iakuban.com/coaching-as-a-business/">Профессия коуч</a>
+          <a href="https://iakuban.com/coaching-as-a-business/">Коучинг для жизни и бизнеса</a>
           <a href="https://iakuban.com/icf-level-1/">Обучение коучингу<span class="ih-dd-hint">аккредитация ICF, Level 1</span></a>
           <a href="https://iakuban.com/icf-level-2/">Продвинутая программа<span class="ih-dd-hint">аккредитация ICF, Level 2</span></a>
               </div>
@@ -451,7 +482,7 @@ footer a:hover{text-decoration:underline}
           <button class="ih-m-btn" type="button" aria-expanded="false">Академия <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m6 9 6 6 6-6"/></svg></button>
           <div class="ih-m-sub">
           <a href="https://iakuban.com/coaching-from-zero/">Введение в коучинг</a>
-          <a href="https://iakuban.com/coaching-as-a-business/">Профессия коуч</a>
+          <a href="https://iakuban.com/coaching-as-a-business/">Коучинг для жизни и бизнеса</a>
           <a href="https://iakuban.com/icf-level-1/">Обучение коучингу<span class="ih-dd-hint">аккредитация ICF, Level 1</span></a>
           <a href="https://iakuban.com/icf-level-2/">Продвинутая программа<span class="ih-dd-hint">аккредитация ICF, Level 2</span></a>
           </div>
@@ -673,7 +704,8 @@ footer a:hover{text-decoration:underline}
 </article>
 <article class="pcard reveal">
   <button class="pcircle" data-video="https://kinescope.io/embed/dr1XbZku2RxYaypxoJrtkL" data-name="Елена Шик" data-quote="«Я прошла с вами такую внутреннюю трансформацию: то, что сейчас, — совсем другое, чем то, что было три месяца назад, когда я начинала.»" aria-label="Видеоотзыв: Елена Шик"><img src="assets/people/p3_03_elena_shik.jpg?v=1786113146" alt="Елена Шик" width="560" height="560" loading="lazy"><span class="pplay" aria-hidden="true"></span></button>
-  <h3>Елена Шик</h3>
+  <h3><a class="coach-name" href="/schick" data-coach-link="schick">Елена Шик</a></h3>
+  <a class="coach-tag" href="/schick" data-coach-link="schick" aria-label="Записаться на сессию: Елена Шик, профиль коуча"><span class="ct-long">Ведёт сессии · записаться →</span><span class="ct-short">Записаться на сессию →</span></a>
   <blockquote class="pquote">«Я прошла с вами такую внутреннюю трансформацию: то, что сейчас, — совсем другое, чем то, что было три месяца назад, когда я начинала.»</blockquote>
   <footer class="pdur"><time datetime="2026-07-25">25 июля 2026</time></footer>
 </article>
@@ -685,13 +717,15 @@ footer a:hover{text-decoration:underline}
 </article>
 <article class="pcard reveal">
   <button class="pcircle" data-video="https://kinescope.io/embed/vxADryn6MBMYsQfvADvgZV" data-name="Линара Абдрафигина" data-quote="«Я перенесла все эти поломки, через которые проходила моя трансформация.»" aria-label="Видеоотзыв: Линара Абдрафигина"><img src="assets/people/p3_05_linara_abdrafigina.jpg?v=1786113146" alt="Линара Абдрафигина" width="560" height="560" loading="lazy"><span class="pplay" aria-hidden="true"></span></button>
-  <h3>Линара Абдрафигина</h3>
+  <h3><a class="coach-name" href="/abdrafigina" data-coach-link="abdrafigina">Линара Абдрафигина</a></h3>
+  <a class="coach-tag" href="/abdrafigina" data-coach-link="abdrafigina" aria-label="Записаться на сессию: Линара Абдрафигина, профиль коуча"><span class="ct-long">Ведёт сессии · записаться →</span><span class="ct-short">Записаться на сессию →</span></a>
   <blockquote class="pquote">«Я перенесла все эти поломки, через которые проходила моя трансформация.»</blockquote>
   <footer class="pdur"><time datetime="2026-07-25">25 июля 2026</time></footer>
 </article>
 <article class="pcard reveal">
   <button class="pcircle" data-video="https://kinescope.io/embed/5Jm33oDy8Muxd75U39WjFW" data-name="Нина Марабян" data-quote="«Моё окружение замечает, как я меняюсь и трансформируюсь — и как отваливаются те люди, которым моя трансформация не пришлась по нутру.»" aria-label="Видеоотзыв: Нина Марабян"><img src="assets/people/p3_06_nina_marabyan.jpg?v=1786113146" alt="Нина Марабян" width="560" height="560" loading="lazy"><span class="pplay" aria-hidden="true"></span></button>
-  <h3>Нина Марабян</h3>
+  <h3><a class="coach-name" href="/marabian" data-coach-link="marabian">Нина Марабян</a></h3>
+  <a class="coach-tag" href="/marabian" data-coach-link="marabian" aria-label="Записаться на сессию: Нина Марабян, профиль коуча"><span class="ct-long">Ведёт сессии · записаться →</span><span class="ct-short">Записаться на сессию →</span></a>
   <blockquote class="pquote">«Моё окружение замечает, как я меняюсь и трансформируюсь — и как отваливаются те люди, которым моя трансформация не пришлась по нутру.»</blockquote>
   <footer class="pdur"><time datetime="2026-07-25">25 июля 2026</time></footer>
 </article>
@@ -709,7 +743,8 @@ footer a:hover{text-decoration:underline}
 </article>
 <article class="pcard reveal">
   <button class="pcircle" data-video="https://kinescope.io/embed/0p7dy34naZgDuaex1zTGF8" data-name="Нурсулу Цупко" data-quote="«Я пошла в проявленность: рилсы у меня выросли ровно на сто процентов. Раньше я боялась это делать, теперь появилась структура, меньше страха и больше уверенности.»" aria-label="Видеоотзыв: Нурсулу Цупко"><img src="assets/people/p3_09_nursulu_tsupko.jpg?v=1786113146" alt="Нурсулу Цупко" width="560" height="560" loading="lazy"><span class="pplay" aria-hidden="true"></span></button>
-  <h3>Нурсулу Цупко</h3>
+  <h3><a class="coach-name" href="/tsupko" data-coach-link="tsupko">Нурсулу Цупко</a></h3>
+  <a class="coach-tag" href="/tsupko" data-coach-link="tsupko" aria-label="Записаться на сессию: Нурсулу Цупко, профиль коуча"><span class="ct-long">Ведёт сессии · записаться →</span><span class="ct-short">Записаться на сессию →</span></a>
   <blockquote class="pquote">«Я пошла в проявленность: рилсы у меня выросли ровно на сто процентов. Раньше я боялась это делать, теперь появилась структура, меньше страха и больше уверенности.»</blockquote>
   <footer class="pdur"><time datetime="2026-07-25">25 июля 2026</time></footer>
 </article>
@@ -751,7 +786,8 @@ footer a:hover{text-decoration:underline}
 </article>
 <article class="pcard reveal">
   <button class="pcircle" data-video="https://kinescope.io/embed/7rpBLNdXrvCvk5mLUgcKEo" data-name="Вениамин Козловский" data-quote="«Изменения вроде сильно не видно, а потом попадаешь в ситуацию, в которой был полгода назад, и вдруг осознаёшь, что реагируешь совершенно по-другому.»" aria-label="Видеоотзыв: Вениамин Козловский"><img src="assets/people/p2_03_veniamin_kozlovskiy.jpg?v=1786113146" alt="Вениамин Козловский" width="560" height="560" loading="lazy"><span class="pplay" aria-hidden="true"></span></button>
-  <h3>Вениамин Козловский</h3>
+  <h3><a class="coach-name" href="/kozlovskiy" data-coach-link="kozlovskiy">Вениамин Козловский</a></h3>
+  <a class="coach-tag" href="/kozlovskiy" data-coach-link="kozlovskiy" aria-label="Записаться на сессию: Вениамин Козловский, профиль коуча"><span class="ct-long">Ведёт сессии · записаться →</span><span class="ct-short">Записаться на сессию →</span></a>
   <blockquote class="pquote">«Изменения вроде сильно не видно, а потом попадаешь в ситуацию, в которой был полгода назад, и вдруг осознаёшь, что реагируешь совершенно по-другому.»</blockquote>
   <footer class="pdur"><time datetime="2026-04-11">11 апреля 2026</time></footer>
 </article>
@@ -769,7 +805,8 @@ footer a:hover{text-decoration:underline}
 </article>
 <article class="pcard reveal">
   <button class="pcircle" data-video="https://kinescope.io/embed/aNJRjKczwD3FxtmiZVu7kC" data-name="Илона Джавахишвили" data-quote="«Я понимаю, что если я в таком пространстве, значит, я этого уровня достойна, и для меня это вообще прям сейчас какой-то высший пилотаж.»" aria-label="Видеоотзыв: Илона Джавахишвили"><img src="assets/people/p2_06_ilona_dzhavahishvili.jpg?v=1786113146" alt="Илона Джавахишвили" width="560" height="560" loading="lazy"><span class="pplay" aria-hidden="true"></span></button>
-  <h3>Илона Джавахишвили</h3>
+  <h3><a class="coach-name" href="/dilona" data-coach-link="dilona">Илона Джавахишвили</a></h3>
+  <a class="coach-tag" href="/dilona" data-coach-link="dilona" aria-label="Записаться на сессию: Илона Джавахишвили, профиль коуча"><span class="ct-long">Ведёт сессии · записаться →</span><span class="ct-short">Записаться на сессию →</span></a>
   <blockquote class="pquote">«Я понимаю, что если я в таком пространстве, значит, я этого уровня достойна, и для меня это вообще прям сейчас какой-то высший пилотаж.»</blockquote>
   <footer class="pdur"><time datetime="2026-04-11">11 апреля 2026</time></footer>
 </article>
@@ -787,7 +824,8 @@ footer a:hover{text-decoration:underline}
 </article>
 <article class="pcard reveal">
   <button class="pcircle" data-video="https://kinescope.io/embed/qSRqQEz4oWA83qjp8P2Xa5" data-name="Марина Дорошко" data-quote="«Моя жизнь действительно сильно изменилась, я в какой-то колоссальной трансформации, я вышла на новый путь. И я пошла в Level 2, и не жалею.»" aria-label="Видеоотзыв: Марина Дорошко"><img src="assets/people/p2_09_marina_doroshko.jpg?v=1786113146" alt="Марина Дорошко" width="560" height="560" loading="lazy"><span class="pplay" aria-hidden="true"></span></button>
-  <h3>Марина Дорошко</h3>
+  <h3><a class="coach-name" href="/doroshko" data-coach-link="doroshko">Марина Дорошко</a></h3>
+  <a class="coach-tag" href="/doroshko" data-coach-link="doroshko" aria-label="Записаться на сессию: Марина Дорошко, профиль коуча"><span class="ct-long">Ведёт сессии · записаться →</span><span class="ct-short">Записаться на сессию →</span></a>
   <blockquote class="pquote">«Моя жизнь действительно сильно изменилась, я в какой-то колоссальной трансформации, я вышла на новый путь. И я пошла в Level 2, и не жалею.»</blockquote>
   <footer class="pdur"><time datetime="2026-04-11">11 апреля 2026</time></footer>
 </article>
@@ -805,7 +843,8 @@ footer a:hover{text-decoration:underline}
 </article>
 <article class="pcard reveal">
   <button class="pcircle" data-video="https://kinescope.io/embed/hzvFvQBuoVsHPBo9rhkKZt" data-name="Наталия Моругина" data-quote="«Это всё было легко, никакой воды, ничего лишнего. Было ровно столько, сколько было нужно, сколько мы готовы были принять на этом уровне.»" aria-label="Видеоотзыв: Наталия Моругина"><img src="assets/people/p2_12_nataliya_morugina.jpg?v=1786113146" alt="Наталия Моругина" width="560" height="560" loading="lazy"><span class="pplay" aria-hidden="true"></span></button>
-  <h3>Наталия Моругина</h3>
+  <h3><a class="coach-name" href="/morugina" data-coach-link="morugina">Наталия Моругина</a></h3>
+  <a class="coach-tag" href="/morugina" data-coach-link="morugina" aria-label="Записаться на сессию: Наталия Моругина, профиль коуча"><span class="ct-long">Ведёт сессии · записаться →</span><span class="ct-short">Записаться на сессию →</span></a>
   <blockquote class="pquote">«Это всё было легко, никакой воды, ничего лишнего. Было ровно столько, сколько было нужно, сколько мы готовы были принять на этом уровне.»</blockquote>
   <footer class="pdur"><time datetime="2026-04-11">11 апреля 2026</time></footer>
 </article>
@@ -817,7 +856,8 @@ footer a:hover{text-decoration:underline}
 </article>
 <article class="pcard reveal">
   <button class="pcircle" data-video="https://kinescope.io/embed/uHGC19Ghi8FcheGh55MvQL" data-name="Полина Карташова" data-quote="«Попадая в твоё поле, ты понимаешь, что тебе больше ничего не нужно искать. Ни у кого, ни у каких преподавателей. Оно всё здесь.»" aria-label="Видеоотзыв: Полина Карташова"><img src="assets/people/p2_14_polina_kartashova.jpg?v=1786113146" alt="Полина Карташова" width="560" height="560" loading="lazy"><span class="pplay" aria-hidden="true"></span></button>
-  <h3>Полина Карташова</h3>
+  <h3><a class="coach-name" href="/kartashova" data-coach-link="kartashova">Полина Карташова</a></h3>
+  <a class="coach-tag" href="/kartashova" data-coach-link="kartashova" aria-label="Записаться на сессию: Полина Карташова, профиль коуча"><span class="ct-long">Ведёт сессии · записаться →</span><span class="ct-short">Записаться на сессию →</span></a>
   <blockquote class="pquote">«Попадая в твоё поле, ты понимаешь, что тебе больше ничего не нужно искать. Ни у кого, ни у каких преподавателей. Оно всё здесь.»</blockquote>
   <footer class="pdur"><time datetime="2026-04-11">11 апреля 2026</time></footer>
 </article>
@@ -835,7 +875,8 @@ footer a:hover{text-decoration:underline}
 </article>
 <article class="pcard reveal">
   <button class="pcircle" data-video="https://kinescope.io/embed/wd8CPPdoGNaJNgS8KeXvuM" data-name="Святослав Родионов" data-quote="«Продукты Алексея — это уникальное сочетание... невероятно тёплой атмосферы и поддержки, и железной структурности. Когда строгая форма канализирует и направляет энергию.»" aria-label="Видеоотзыв: Святослав Родионов"><img src="assets/people/p2_17_svyatoslav_rodionov.jpg?v=1786113146" alt="Святослав Родионов" width="560" height="560" loading="lazy"><span class="pplay" aria-hidden="true"></span></button>
-  <h3>Святослав Родионов</h3>
+  <h3><a class="coach-name" href="/rodionov" data-coach-link="rodionov">Святослав Родионов</a></h3>
+  <a class="coach-tag" href="/rodionov" data-coach-link="rodionov" aria-label="Записаться на сессию: Святослав Родионов, профиль коуча"><span class="ct-long">Ведёт сессии · записаться →</span><span class="ct-short">Записаться на сессию →</span></a>
   <blockquote class="pquote">«Продукты Алексея — это уникальное сочетание... невероятно тёплой атмосферы и поддержки, и железной структурности. Когда строгая форма канализирует и направляет энергию.»</blockquote>
   <footer class="pdur"><time datetime="2026-04-11">11 апреля 2026</time></footer>
 </article>
@@ -1027,7 +1068,8 @@ footer a:hover{text-decoration:underline}
 </article>
 <article class="pcard reveal">
   <button class="pcircle" data-video="https://kinescope.io/embed/5fPukER4MJ8rSYHr8ij34s" data-name="Надя Елисеева" data-quote="«У меня сильно упали доходы. Я послушала тебя, и у меня возникло вдохновение.»" aria-label="Видеоотзыв: Надя Елисеева"><img src="assets/people/p1_29_nadya_eliseeva.jpg?v=1786113146" alt="Надя Елисеева" width="560" height="560" loading="lazy"><span class="pplay" aria-hidden="true"></span></button>
-  <h3>Надя Елисеева</h3>
+  <h3><a class="coach-name" href="/eliseeva" data-coach-link="eliseeva">Надя Елисеева</a></h3>
+  <a class="coach-tag" href="/eliseeva" data-coach-link="eliseeva" aria-label="Записаться на сессию: Надя Елисеева, профиль коуча"><span class="ct-long">Ведёт сессии · записаться →</span><span class="ct-short">Записаться на сессию →</span></a>
   <blockquote class="pquote">«У меня сильно упали доходы. Я послушала тебя, и у меня возникло вдохновение.»</blockquote>
   <footer class="pdur"><time datetime="2025-12-20">20 декабря 2025</time></footer>
 </article>
@@ -1091,7 +1133,7 @@ footer a:hover{text-decoration:underline}
   <button class="cvideo" data-video="https://kinescope.io/embed/6NjH16KYq4wyHMNEwH6c9H" data-name="Яромила Юланова" data-quote="«Теперь у меня такой бриллиант в виде коучинга — мне кажется, это незаменимый скилл для помогающего специалиста.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
 </article>
 <article class="ccard">
-  <div class="ccard-top"><img src="assets/people/p3_06_nina_marabyan.jpg?v=1786113146" alt="Нина Марабян" width="120" height="120" loading="lazy"><div><h3 class="cname">Нина Марабян</h3><div class="crole">выпускница 3 потока</div></div></div>
+  <div class="ccard-top"><img src="assets/people/p3_06_nina_marabyan.jpg?v=1786113146" alt="Нина Марабян" width="120" height="120" loading="lazy"><div><h3 class="cname"><a class="coach-name" href="/marabian" data-coach-link="marabian">Нина Марабян</a></h3><div class="crole">выпускница 3 потока</div><a class="coach-tag" href="/marabian" data-coach-link="marabian" aria-label="Записаться на сессию: Нина Марабян, профиль коуча"><span class="ct-long">Ведёт сессии · записаться →</span><span class="ct-short">Записаться на сессию →</span></a></div></div>
   <dl class="cab">
     <div class="row was"><dt class="sr-only">До программы</dt><dd>без своего дохода, «не знала, чего хочу от жизни и куда идти»</dd></div>
     <div class="row now"><dt class="sr-only">После программы</dt><dd>долгосрочные клиентские контракты, пост с одним коучинговым вопросом набрал 55 000 в Threads</dd></div>
@@ -1118,7 +1160,7 @@ footer a:hover{text-decoration:underline}
   <button class="cvideo" data-video="https://kinescope.io/embed/tuZRuDs9ENsNToQRxxZgyE" data-name="Валерия Пожичкевич" data-quote="«Мне не нужны другие. У меня матч уже случился, мне нужен именно этот преподаватель. И меня вообще не волнует, у кого сколько регалий, сертификатов.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
 </article>
 <article class="ccard">
-  <div class="ccard-top"><img src="assets/people/p3_05_linara_abdrafigina.jpg?v=1786113146" alt="Линара Абдрафигина" width="120" height="120" loading="lazy"><div><h3 class="cname">Линара Абдрафигина</h3><div class="crole">основательница мастерской ручной работы</div></div></div>
+  <div class="ccard-top"><img src="assets/people/p3_05_linara_abdrafigina.jpg?v=1786113146" alt="Линара Абдрафигина" width="120" height="120" loading="lazy"><div><h3 class="cname"><a class="coach-name" href="/abdrafigina" data-coach-link="abdrafigina">Линара Абдрафигина</a></h3><div class="crole">основательница мастерской ручной работы</div><a class="coach-tag" href="/abdrafigina" data-coach-link="abdrafigina" aria-label="Записаться на сессию: Линара Абдрафигина, профиль коуча"><span class="ct-long">Ведёт сессии · записаться →</span><span class="ct-short">Записаться на сессию →</span></a></div></div>
   <dl class="cab">
     <div class="row was"><dt class="sr-only">До программы</dt><dd>коучинг — второе дело при мастерской, клиенты только из круга знакомых</dd></div>
     <div class="row now"><dt class="sr-only">После программы</dt><dd>пять клиенток в долгосрочных контрактах, 100+ часов практики; осенью — подача на ACC ICF, дальше Level 2</dd></div>
@@ -1136,7 +1178,7 @@ footer a:hover{text-decoration:underline}
   <button class="cvideo" data-video="https://kinescope.io/embed/eUxz8sa19yxVXog1bprrXr" data-name="Ольга Тимонина" data-quote="«Это как раз усиление всех наших личностных, профессиональных качеств, расширение сознания и очень глубоких трансформаций.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
 </article>
 <article class="ccard">
-  <div class="ccard-top"><img src="assets/people/p3_09_nursulu_tsupko.jpg?v=1786113146" alt="Нурсулу Цупко" width="120" height="120" loading="lazy"><div><h3 class="cname">Нурсулу Цупко</h3><div class="crole">эксперт, выпускница 3 потока</div></div></div>
+  <div class="ccard-top"><img src="assets/people/p3_09_nursulu_tsupko.jpg?v=1786113146" alt="Нурсулу Цупко" width="120" height="120" loading="lazy"><div><h3 class="cname"><a class="coach-name" href="/tsupko" data-coach-link="tsupko">Нурсулу Цупко</a></h3><div class="crole">эксперт, выпускница 3 потока</div><a class="coach-tag" href="/tsupko" data-coach-link="tsupko" aria-label="Записаться на сессию: Нурсулу Цупко, профиль коуча"><span class="ct-long">Ведёт сессии · записаться →</span><span class="ct-short">Записаться на сессию →</span></a></div></div>
   <dl class="cab">
     <div class="row was"><dt class="sr-only">До программы</dt><dd>боялась проявляться, коучинг был одним из направлений «на пробу»</dd></div>
     <div class="row now"><dt class="sr-only">После программы</dt><dd>пошла в проявленность: охваты рилс выросли на 100%, два клиента в долгом контракте, впереди Level 2</dd></div>
@@ -1163,7 +1205,7 @@ footer a:hover{text-decoration:underline}
   <button class="cvideo" data-video="https://kinescope.io/embed/ug8ffM1tBU5QGnPL4qPM73" data-name="Наталья Козлова" data-quote="«Мы настолько сблизились, что мы уже как одно целое — как сплелись корни разных деревьев, их уже сложно расплетать.»"><span class="ic" aria-hidden="true"></span>Смотреть видеоотзыв</button>
 </article>
 <article class="ccard">
-  <div class="ccard-top"><img src="assets/people/p3_03_elena_shik.jpg?v=1786113146" alt="Елена Шик" width="120" height="120" loading="lazy"><div><h3 class="cname">Елена Шик</h3><div class="crole">практикующий коуч</div></div></div>
+  <div class="ccard-top"><img src="assets/people/p3_03_elena_shik.jpg?v=1786113146" alt="Елена Шик" width="120" height="120" loading="lazy"><div><h3 class="cname"><a class="coach-name" href="/schick" data-coach-link="schick">Елена Шик</a></h3><div class="crole">практикующий коуч</div><a class="coach-tag" href="/schick" data-coach-link="schick" aria-label="Записаться на сессию: Елена Шик, профиль коуча"><span class="ct-long">Ведёт сессии · записаться →</span><span class="ct-short">Записаться на сессию →</span></a></div></div>
   <dl class="cab">
     <div class="row was"><dt class="sr-only">До программы</dt><dd>«учиться всегда легче, чем продавать» — уверенности в собственной практике не было</dd></div>
     <div class="row now"><dt class="sr-only">После программы</dt><dd>твёрдое «я знаю, что у меня коучинг получается» — продолжает путь в академии на Level 2</dd></div>
@@ -1444,6 +1486,19 @@ footer a:hover{text-decoration:underline}
   } else {
     document.querySelectorAll('.reveal').forEach(function(el){ el.classList.add('in'); });
   }
+})();
+</script>
+<!-- Клик в профиль коуча-выпускника: событие coach_profile_click в GA4 и цель в Метрике (29.10.2026) -->
+<script>
+(function(){
+  document.addEventListener('click', function(e){
+    var a = e.target.closest && e.target.closest('a[data-coach-link]');
+    if (!a) return;
+    var slug = a.getAttribute('data-coach-link'), place = a.classList.contains('coach-tag') ? 'tag' : 'name';
+    var block = a.closest('.ccard') ? 'cases' : 'wall';
+    try { gtag('event','coach_profile_click',{'coach_slug':slug,'link_place':place,'page_block':block,'transport_type':'beacon'}); } catch(err){}
+    try { ym(109783359,'reachGoal','coach_profile_click',{coach_slug:slug,link_place:place,page_block:block}); } catch(err){}
+  }, true);
 })();
 </script>
 </body>

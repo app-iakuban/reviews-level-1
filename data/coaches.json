@@ -1,0 +1,20 @@
+{
+  "_doc": "Карта «выпускник → публичный профиль коуча на iakuban.com/<slug>» (29.10.2026). Источник профилей: api.iakuban.com/api/v1/coaches/browse (опубликованные, они же в sitemap.xml). build.py ищет сначала по key отзыва (keys), потом по имени (name + aliases, без учёта регистра и ё/е). Страница /reviews/level-2/ подключает этот же файл и матчит по имени. Сомнительные совпадения сюда не вносить. Пересверка: прогнать browse и сравнить слаги; уехавший с платформы коуч = удалить запись.",
+  "updated": "2026-10-29",
+  "coaches": [
+    {"slug": "kartashova", "name": "Полина Карташова", "aliases": [], "keys": ["p2_14_polina_kartashova"]},
+    {"slug": "abdrafigina", "name": "Линара Абдрафигина", "aliases": [], "keys": ["p3_05_linara_abdrafigina"]},
+    {"slug": "rodionov", "name": "Светослав Родионов", "aliases": ["Святослав Родионов"], "keys": ["p2_17_svyatoslav_rodionov"]},
+    {"slug": "doroshko", "name": "Марина Дорошко", "aliases": [], "keys": ["p2_09_marina_doroshko"]},
+    {"slug": "eliseeva", "name": "Надежда Елисеева", "aliases": ["Надя Елисеева"], "keys": ["p1_29_nadya_eliseeva"]},
+    {"slug": "tsupko", "name": "Нурсулу Цупко", "aliases": [], "keys": ["p3_09_nursulu_tsupko"]},
+    {"slug": "dilona", "name": "Илона Джавахишвили", "aliases": [], "keys": ["p2_06_ilona_dzhavahishvili"]},
+    {"slug": "kozlovskiy", "name": "Вениамин Козловский", "aliases": [], "keys": ["p2_03_veniamin_kozlovskiy"]},
+    {"slug": "marabian", "name": "Нина Марабян", "aliases": [], "keys": ["p3_06_nina_marabyan"]},
+    {"slug": "schick", "name": "Елена Шик", "aliases": [], "keys": ["p3_03_elena_shik"]},
+    {"slug": "morugina", "name": "Наталия Моругина", "aliases": ["Наталья Моругина"], "keys": ["p2_12_nataliya_morugina"]},
+    {"slug": "snetkova", "name": "Екатерина Снеткова", "aliases": [], "keys": []},
+    {"slug": "volobueva", "name": "Екатерина Волобуева", "aliases": [], "keys": []},
+    {"slug": "taranenko", "name": "Ярослав Тараненко", "aliases": [], "keys": []}
+  ]
+}

@@ -85,6 +85,49 @@ def kinescope_map():
     return json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
 
 
+COACH_TAG = ('<span class="ct-long">Ведёт сессии · записаться →</span>'
+             '<span class="ct-short">Записаться на сессию →</span>')  # короткая — на мобиле ≤600px
+
+
+def load_coaches():
+    """data/coaches.json → (по key, по нормализованному имени) → slug профиля коуча на iakuban.com.
+
+    Выпускник с публичным профилем на платформе получает ссылку на /<slug> (Nuxt, без слэша)
+    у имени и метку «Ведёт сессии · записаться →». Тот же файл читает /reviews/level-2/ (по имени).
+    """
+    f = DATA / "coaches.json"
+    if not f.exists():
+        return {}, {}
+    by_key, by_name = {}, {}
+    for c in json.loads(f.read_text(encoding="utf-8"))["coaches"]:
+        for k in c.get("keys", []):
+            by_key[k] = c["slug"]
+        for n in [c["name"], *c.get("aliases", [])]:
+            by_name[norm_name(n)] = c["slug"]
+    return by_key, by_name
+
+
+def norm_name(n):
+    return " ".join(n.lower().replace("ё", "е").split())
+
+
+COACH_BY_KEY, COACH_BY_NAME = {}, {}
+
+
+def coach_slug(key, name):
+    return COACH_BY_KEY.get(key) or COACH_BY_NAME.get(norm_name(name))
+
+
+def coach_links(slug, name_html):
+    """(имя-ссылка, метка-ссылка). Обычные <a> на Nuxt-профиль без слэша и без UTM;
+    data-coach-link ловит скрипт событий coach_profile_click (GA4 + Метрика)."""
+    href = f"/{slug}"
+    name_a = f'<a class="coach-name" href="{href}" data-coach-link="{slug}">{name_html}</a>'
+    tag_a = (f'<a class="coach-tag" href="{href}" data-coach-link="{slug}" '
+             f'aria-label="Записаться на сессию: {name_html}, профиль коуча">{COACH_TAG}</a>')
+    return name_a, tag_a
+
+
 def key_of(cohort, item):
     return f'p{cohort["cohort"]}_{item["file"][:-4]}'
 
@@ -120,6 +163,11 @@ def pcard(cohort, item, kmap):
     quote = html.escape(item["quote"])
     src = html.escape(video_src(cohort, item, kmap))
     grad = cohort["graduation"]
+    slug = coach_slug(key, item["name"])
+    title, tag = (name, "")
+    if slug:
+        title, tag_a = coach_links(slug, name)
+        tag = f'\n  {tag_a}'
     return (
         f'<article class="pcard reveal">\n'
         f'  <button class="pcircle" data-video="{src}" data-name="{name}" data-quote="«{quote}»" '
@@ -127,7 +175,7 @@ def pcard(cohort, item, kmap):
         f'<img src="{face_src(key)}" alt="{name}" width="560" height="560" loading="lazy">'
         f'<span class="pplay" aria-hidden="true"></span>'
         f'</button>\n'
-        f'  <h3>{name}</h3>\n'
+        f'  <h3>{title}</h3>{tag}\n'
         f'  <blockquote class="pquote">«{quote}»</blockquote>\n'
         f'  <footer class="pdur"><time datetime="{grad}">{date_ru(grad)}</time></footer>\n'
         f'</article>'
@@ -148,6 +196,10 @@ def ccard(case, index, kmap):
     now = html.escape(case["now"])
     quote = html.escape(case["quote"])
     key = case.get("key")
+    slug = coach_slug(key or "", case["name"])
+    title, tag = (name, "")
+    if slug:
+        title, tag = coach_links(slug, name)
     if key:
         img = face_src(key)
         c, it = index[key]
@@ -164,7 +216,7 @@ def ccard(case, index, kmap):
         f'<article class="ccard">\n'
         f'  <div class="ccard-top">'
         f'<img src="{img}" alt="{name}" width="120" height="120" loading="lazy">'
-        f'<div><h3 class="cname">{name}</h3><div class="crole">{role}</div></div></div>\n'
+        f'<div><h3 class="cname">{title}</h3><div class="crole">{role}</div>{tag}</div></div>\n'
         f'  <dl class="cab">\n'
         f'    <div class="row was"><dt class="sr-only">До программы</dt><dd>{was}</dd></div>\n'
         f'    <div class="row now"><dt class="sr-only">После программы</dt><dd>{now}</dd></div>\n'
@@ -309,6 +361,8 @@ def replace_block(src, start, end, content):
 
 
 def main():
+    global COACH_BY_KEY, COACH_BY_NAME
+    COACH_BY_KEY, COACH_BY_NAME = load_coaches()
     cohorts = load_cohorts()
     kmap = kinescope_map()
     faq = load_faq()
@@ -373,9 +427,11 @@ def main():
     src = re.sub(r"\d+ видео выпускников", f"{total} видео выпускников", src)  # <title>
     INDEX.write_text(src, encoding="utf-8")
 
+    n_coach_wall = sum(1 for c, it in ordered if coach_slug(key_of(c, it), it["name"]))
+    n_coach_cases = sum(1 for cs in cases if coach_slug(cs.get("key") or "", cs["name"]))
     n_photo = sum(1 for k in index if (PEOPLE / f"{k}.jpg").exists())
     print(f"ok: total={total}, mosaic={len(MOSAIC)}, фото={n_photo}, фолбэк-постер={total - n_photo}, "
-          f"media={MEDIA_MODE}, faq={len(faq['items']) if faq else 0}, updated={faq['updated'] if faq else '-'}")
+          f"media={MEDIA_MODE}, коучи: стена={n_coach_wall} кейсы={n_coach_cases}, faq={len(faq['items']) if faq else 0}, updated={faq['updated'] if faq else '-'}")
 
 
 if __name__ == "__main__":
